@@ -3,8 +3,10 @@ import "./Auth.css";
 import assets from "../../assets";
 import { server_url } from "../../utils";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Auth = () => {
+const Auth = ({ verified }) => {
+  const navigate = useNavigate();
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const textSliderRef = useRef(null);
   const imagesRefs = useRef([]);
@@ -16,6 +18,13 @@ const Auth = () => {
   const loginEmailRef = useRef(null);
   const loginPasswordRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    // Redirect to home page if the user is verified
+    if (verified) {
+      navigate("/");
+    }
+  }, [verified, navigate]);
 
   const handleToggle = () => {
     setIsSignUpMode(!isSignUpMode);
@@ -109,8 +118,9 @@ const Auth = () => {
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("id", response.data.id);
-
+      navigate("/");
       setErrorMessage(""); // Clear any error message on success
+      window.location.reload();
     } catch (error) {
       console.error("Error signing up", error);
       setErrorMessage(error.response?.data?.message || "Signup failed");
@@ -140,6 +150,8 @@ const Auth = () => {
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("id", response.data.id);
+      navigate("/");
+      window.location.reload();
       setErrorMessage("");
     } catch (error) {
       console.error("Error logging in", error);

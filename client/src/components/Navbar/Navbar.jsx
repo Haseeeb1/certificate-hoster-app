@@ -11,6 +11,9 @@ const Navbar = ({ verified }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const name = localStorage.getItem("name"); // Fetch the name from local storage
+  const firstLetter = name ? name.charAt(0).toUpperCase() : "";
+
   return (
     <header className="header" id="header">
       <nav className="nav container__navbar">
@@ -26,33 +29,41 @@ const Navbar = ({ verified }) => {
           <div className="right__links__div">
             <ul className="nav__list">
               <li className="nav__item">
-                <Link to="/" className="nav__link">
+                <Link onClick={toggleMenu} to="/" className="nav__link">
                   Home
                 </Link>
               </li>
               {verified && (
                 <li className="nav__item">
-                  <Link to="/support" className="nav__link">
+                  <Link
+                    onClick={toggleMenu}
+                    to="/support"
+                    className="nav__link"
+                  >
                     My-Certificates
                   </Link>
                 </li>
               )}
               <li className="nav__item">
-                <Link to="/about" className="nav__link">
+                <Link onClick={toggleMenu} to="/about" className="nav__link">
                   About
                 </Link>
               </li>
               <li className="nav__item">
-                <Link to="/support" className="nav__link">
+                <Link onClick={toggleMenu} to="/support" className="nav__link">
                   Support Us
                 </Link>
               </li>
             </ul>
             {verified ? (
-              <p>hello</p>
+              <div class="avatar">
+                <div className="avatar__letter">{firstLetter}</div>
+              </div>
             ) : (
               <Link to="/auth">
-                <button className="button__login">Log In</button>
+                <button className="button__login" onClick={toggleMenu}>
+                  Log In
+                </button>
               </Link>
             )}
           </div>

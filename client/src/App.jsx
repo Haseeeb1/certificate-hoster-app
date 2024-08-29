@@ -33,7 +33,7 @@ function App() {
         <Navbar verified={verified} />
         <Routes>
           <Route path="/" element={<Home verified={verified} />} />
-          {!verified && <Route path="/auth" element={<Auth />} />}
+          <Route path="/auth" element={<Auth verified={verified} />} />
           <Route path="/1" element={<Certificate verified={verified} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

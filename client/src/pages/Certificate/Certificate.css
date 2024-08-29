@@ -1,0 +1,203 @@
+.certificate__div__main{
+    max-width: 1800px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    min-width: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+    margin-bottom: 25px;
+}
+
+.certificate__title_div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.certificate__title__text p{
+    font-size: var(--medium-text);
+    font-weight: 400;
+}
+
+.certificate__title__text h2{
+    font-size: var(--large-text);
+    font-weight: 500;
+}
+
+
+.certificate__details__div {
+    display: flex;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  
+  .certificate__details__left {
+    min-height: 400px;
+ /* Set max height to 600px */
+    flex: 0 0 40%;
+    background-image: url('../../assets/bg-deisgn.png');
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensure the image covers the entire div */
+    background-position: center; /* Center the background image */
+    border-radius: 20px;
+    padding: 20px;
+  }
+  
+  .certificate__details__right {
+    min-height: 400px;
+    max-height: 600px; /* Set max height to 600px */
+    flex: 0 0 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .certificate__img {
+    max-width: 100%;
+    max-height: 100%; /* Ensure the image fits within the div */
+    object-fit: contain; /* Ensure the image is fully contained within the div */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  @media screen and (max-width: 900px) {
+    .certificate__details__div {
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+   
+    
+    .certificate__details__right {
+      flex: 1 1 100%;
+      max-height: 400px; /* Reduce max height for smaller screens */
+    }
+    .certificate__details__left{
+        flex: 1 1 100%;
+        max-height: fit-content;
+    }
+  
+    .certificate__img {
+      width: 100%;
+      max-height: 400px; /* Ensure the image fits within the div */
+      height: 400px; /* Maintain aspect ratio */
+      object-fit: contain; /* Ensure the image is fully contained within the div */
+    }
+  }
+  
+  
+  @media screen and (max-width: 600px) {
+
+    
+    .certificate__details__right {
+        margin-top: -30px;
+        min-height: 300px;
+    }
+    .certificate__img {
+        width: 100%;
+        height: 350px; 
+        object-fit:contain; 
+      }
+  }
+  @media screen and (max-width: 450px) {
+    .certificate__details__left{
+      max-height: fit-content;
+    }
+    }
+@media screen and (min-width: 1023px) {
+    .certificate__div__main{
+      margin-top: calc(3.5rem + 3.5rem);
+    }
+}
+
+.bg-pattern {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40vw;  
+    height: 72vh;  
+    background: url('../../assets/bg-pattern.svg') no-repeat;
+    background-size: contain;
+    z-index: 99; 
+  }
+
+  @media screen  and (max-width:1300px){
+    .bg-pattern{
+        display: none;
+    }
+    
+  }
+
+
+  .certificate__details__left{
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-direction: column;
+    padding: 40px;
+    color: #ffff;
+    z-index: 99;
+    
+}
+
+
+
+.logo-header__div{
+    display: flex;
+    align-items: center;
+}
+
+
+.cert__name__div >h1{
+    letter-spacing: 2px;
+    font-weight: 800; 
+    font-size: 55px;
+    word-break: break-word; 
+}
+
+.cert__desc__div>h3{
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.cert__desc__div>h4{
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.cert__date__div>h3{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+@media screen and (max-width:1000px) {
+    .cert__name__div >h1{
+        font-size: 40px;
+    }
+    
+    .cert__desc__div>h3{
+      font-size: 17px;
+    }
+    
+    .cert__desc__div>h4{
+        font-size: 11px;
+    }
+    
+    .cert__date__div>h3{
+        font-size: 27px;
+    }
+}
+
+  
+@media screen and (max-width: 550px) {
+    .certificate__div__main{
+    max-width: 1800px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+}

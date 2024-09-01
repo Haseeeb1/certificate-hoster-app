@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiMenu, FiX } from "react-icons/fi";
-import "./Navbar.css";
 import assets from "../../assets";
+import { FiMenu, FiX } from "react-icons/fi";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
-const Navbar = ({ verified }) => {
+const CertificateNav = ({ verified }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -58,11 +57,6 @@ const Navbar = ({ verified }) => {
         >
           <div className="right__links__div">
             <ul className="nav__list">
-              <li className="nav__item">
-                <Link onClick={toggleMenu} to="/" className="nav__link">
-                  Home
-                </Link>
-              </li>
               {verified && (
                 <li className="nav__item">
                   <Link
@@ -76,28 +70,23 @@ const Navbar = ({ verified }) => {
               )}
               <li className="nav__item">
                 <Link onClick={toggleMenu} to="/about" className="nav__link">
-                  About
+                  About-us
                 </Link>
               </li>
+
               <li className="nav__item">
-                <Link onClick={toggleMenu} to="/support" className="nav__link">
-                  Support Us
+                <Link onClick={toggleMenu} to="/" className="nav__link">
+                  Create-now
                 </Link>
               </li>
             </ul>
-            {verified ? (
+            {verified && (
               <div className="avatar-container">
                 <button onClick={logout}>LogOut</button>
                 <div className="avatar">
                   <div className="avatar__letter">{firstLetter}</div>
                 </div>
               </div>
-            ) : (
-              <Link to="/auth">
-                <button className="button__login" onClick={toggleMenu}>
-                  Log In
-                </button>
-              </Link>
             )}
           </div>
           {/* Close button */}
@@ -117,4 +106,4 @@ const Navbar = ({ verified }) => {
   );
 };
 
-export default Navbar;
+export default CertificateNav;

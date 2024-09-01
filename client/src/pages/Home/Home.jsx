@@ -1,10 +1,10 @@
 import Hero from "../../components/Hero/Hero";
 import "./Home.css";
 
-const Home = () => {
+const Home = ({ verified }) => {
   return (
     <>
-      <Hero />
+      <Hero verified={verified} />
     </>
   );
 };

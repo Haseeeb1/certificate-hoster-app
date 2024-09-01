@@ -280,3 +280,51 @@
     transform: translateX(-50%) rotate(180deg);
   }
   
+  .avatar-container {
+    position: relative; /* Ensures modal positions relative to the avatar */
+  }
+  
+  .avatar-modal {
+    position: absolute;
+    top: calc(100% + 10px); /* Positions the modal just below the avatar */
+    right: -230%;
+    transform: translateX(-50%);
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%; /* Adjusts width to its content or maximum width */
+    min-width: 250px; /* Ensures the modal has a minimum width */
+    background-color: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    color: #e8e8e8;
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+  
+  .content {
+    width: 100%;
+  }
+  
+  .content .heading {
+    font-weight: 700;
+    font-size: 22px;
+    color: #1d1d1f;
+  }
+  
+  .content .para {
+    line-height: 1.5;
+    color: #1d1d1f;
+  }
+  
+  .content .btn {
+    color: #e8e8e8;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(-45deg, #f89b29 0%, #ff0f7b 100%);
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }

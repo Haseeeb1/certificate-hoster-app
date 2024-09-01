@@ -4,6 +4,7 @@ import assets from "../../assets";
 import { server_url } from "../../utils";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Auth = ({ verified }) => {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ const Auth = ({ verified }) => {
   const passwordRef = useRef(null);
   const loginEmailRef = useRef(null);
   const loginPasswordRef = useRef(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     // Redirect to home page if the user is verified
@@ -92,11 +92,26 @@ const Auth = ({ verified }) => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
+  const validateSignUp = (name, email, password) => {
+    if (name.length < 4) return "Name must be at least 4 characters long.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return "Invalid email format.";
+    if (password.length < 6)
+      return "Password must be at least 6 characters long.";
+    return null;
+  };
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+
+    const validationError = validateSignUp(name, email, password);
+    if (validationError) {
+      toast.error(validationError);
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -114,16 +129,17 @@ const Auth = ({ verified }) => {
         }
       );
 
-      console.log("User signed up successfully", response.data);
+      toast.dismiss();
+      toast.success("Sign up successfull");
       localStorage.setItem("name", response.data.name);
       localStorage.setItem("email", response.data.email);
       localStorage.setItem("id", response.data.id);
       navigate("/");
-      setErrorMessage(""); // Clear any error message on success
       window.location.reload();
     } catch (error) {
-      console.error("Error signing up", error);
-      setErrorMessage(error.response?.data?.message || "Signup failed");
+      // console.error("Error signing up", error);
+      toast.dismiss();
+      toast.error(error.response?.data?.msg || "Signup failed");
     }
   };
 
@@ -152,10 +168,10 @@ const Auth = ({ verified }) => {
       localStorage.setItem("id", response.data.id);
       navigate("/");
       window.location.reload();
-      setErrorMessage("");
     } catch (error) {
-      console.error("Error logging in", error);
-      setErrorMessage(error.response?.data?.message || "Login failed");
+      // console.error("Error logging in", error);
+      toast.dismiss();
+      toast.error(error.response?.data?.msg || "Login failed");
     }
   };
   return (
@@ -192,7 +208,6 @@ const Auth = ({ verified }) => {
                   <input
                     ref={loginEmailRef}
                     type="text"
-                    minLength="4"
                     className="input-field"
                     autoComplete="off"
                     required
@@ -206,7 +221,6 @@ const Auth = ({ verified }) => {
                   <input
                     ref={loginPasswordRef}
                     type="password"
-                    minLength="4"
                     className="input-field"
                     autoComplete="off"
                     required
@@ -250,7 +264,6 @@ const Auth = ({ verified }) => {
                   <input
                     ref={nameRef}
                     type="text"
-                    minLength="4"
                     className="input-field"
                     autoComplete="off"
                     required
@@ -277,7 +290,6 @@ const Auth = ({ verified }) => {
                   <input
                     ref={passwordRef}
                     type="password"
-                    minLength="4"
                     className="input-field"
                     autoComplete="off"
                     required

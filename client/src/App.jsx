@@ -9,10 +9,12 @@ import { server_url } from "./utils";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
+import { Toaster } from "react-hot-toast";
+import CertificateNav from "./components/Navbar/CertificateNav";
+import MyCred from "./pages/MyCertificates/MyCred";
 
 function App() {
   const [verified, setVerified] = useState(false);
-
   const userId = localStorage.getItem("id");
   useEffect(() => {
     axios
@@ -24,20 +26,64 @@ function App() {
           setVerified(true);
         }
       })
-      .catch((error) => console.error("Error verifying token", error));
+      .catch((error) => console.log("not verified"));
   });
 
   return (
     <>
       <Router>
-        <Navbar verified={verified} />
         <Routes>
-          <Route path="/" element={<Home verified={verified} />} />
-          <Route path="/auth" element={<Auth verified={verified} />} />
-          <Route path="/1" element={<Certificate verified={verified} />} />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar verified={verified} />
+                <Home verified={verified} />
+              </>
+            }
+          />
+          <Route
+            path="/auth"
+            element={
+              <>
+                <Navbar verified={verified} />
+                <Auth verified={verified} />
+              </>
+            }
+          />
+          {verified && (
+            <Route
+              path="/my-certificates"
+              element={
+                <>
+                  <Navbar verified={verified} />
+                  <MyCred verified={verified} />
+                </>
+              }
+            />
+          )}
+          <Route
+            path="/cred/:id"
+            element={
+              <>
+                <CertificateNav verified={verified} />
+                <Certificate />
+              </>
+            }
+          />
+
+          <Route
+            path="*"
+            element={
+              <>
+                <Navbar verified={verified} />
+                <NotFound />
+              </>
+            }
+          />
         </Routes>
       </Router>
+      <Toaster />
     </>
   );
 }

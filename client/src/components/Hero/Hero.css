@@ -336,3 +336,45 @@
   cursor: pointer;
   height: 30px;
 }
+
+
+.success {
+   overflow-x: scroll;
+   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: #EDFBD8;
+  border-radius: 8px;
+  border: 1px solid #84D65A;
+  box-shadow: 0px 0px 5px -3px #111;
+}
+
+
+.success::-webkit-scrollbar {
+ /* Hide scrollbar in WebKit browsers */
+  height: 8px;
+}
+
+.success::-webkit-scrollbar-thumb {
+  background-color: rgb(164, 163, 163); /* Light grey color */
+  border-radius: 2px; /* Rounded corners */
+}
+
+.success::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* Very light grey background */
+}
+.success__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #2B641E;
+}
+
+
+
+.success__close path {
+  fill: #2B641E;
+}

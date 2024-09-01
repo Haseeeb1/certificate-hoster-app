@@ -3,40 +3,17 @@ import assets from "../../assets";
 import "./Hero.css";
 import "animate.css";
 import axios from "axios";
-import { server_url } from "../../utils";
+import { frontend_url, server_url } from "../../utils";
+import toast from "react-hot-toast";
 
-const Hero = () => {
+const Hero = ({ verified }) => {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState(null);
   const [generate, setGenerate] = useState(false);
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setGenerate(false);
-    processFile(selectedFile);
-  };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const droppedFile = event.dataTransfer.files[0];
-    processFile(droppedFile);
-  };
-
-  const processFile = (selectedFile) => {
-    if (selectedFile) {
-      if (
-        selectedFile.type === "image/jpeg" ||
-        selectedFile.type === "image/png"
-      ) {
-        setFileName(selectedFile.name);
-        setFile(selectedFile);
-      } else {
-        alert("Please select a valid JPEG, JPG, or PNG file.");
-      }
-    } else {
-      alert("No file selected");
-    }
-  };
+  const userId = localStorage.getItem("id") || null;
+  const [loading, setLoading] = useState(false);
+  const [backgroundImage, setBackgroundImage] = useState("");
+  const [certificateUrl, setCertificateUrl] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -44,7 +21,52 @@ const Hero = () => {
     hashtags: "",
     dateSelected: "",
     message: "",
+    userId: userId,
   });
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    processFile(selectedFile);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+
+    const droppedFile = event.dataTransfer.files[0];
+
+    processFile(droppedFile);
+  };
+
+  const processFile = (selectedFile) => {
+    setCertificateUrl(null);
+    setGenerate(false);
+
+    if (selectedFile) {
+      if (selectedFile.size <= 3 * 1024 * 1024) {
+        // Check if file size is <= 3 MB
+        if (
+          selectedFile.type === "image/jpeg" ||
+          selectedFile.type === "image/png"
+        ) {
+          setFileName(selectedFile.name);
+          setFile(selectedFile);
+
+          const imageUrl = URL.createObjectURL(selectedFile);
+          setBackgroundImage(imageUrl);
+        } else {
+          toast.dismiss();
+          toast.error("Please select a valid JPEG, JPG, or PNG file.");
+        }
+      } else {
+        toast.dismiss();
+        toast.error("File size exceeds 3 MB.");
+      }
+    } else {
+      toast.dismiss();
+      toast.error("No file selected");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,75 +75,78 @@ const Hero = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!file) {
-      alert("Please select a file before generating the link.");
+      toast.dismiss();
+      toast.error("Please select a file before generating the link.");
       return;
     }
 
+    setLoading(true);
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = async () => {
         const base64Data = reader.result;
 
-        const response = await axios.post(`${server_url}/upload`, {
-          data: base64Data,
-          formData,
-        });
+        const response = await axios.post(
+          `${server_url}/api/generate/certificate`,
+          {
+            data: base64Data,
+            formData,
+          }
+        );
 
-        if (response.status === 200) {
-          console.log(response.data);
-          alert("Link generated successfully!");
+        if (response.status === 201) {
+          const certificateId = response.data;
+          setCertificateUrl(`${frontend_url}/cred/${certificateId}`);
+          toast.dismiss();
+          toast.success("Link generated successfully!");
           setGenerate(true);
+          setFormData({
+            name: "",
+            title: "",
+            hashtags: "",
+            dateSelected: "",
+            message: "",
+            userId: userId,
+          });
+
+          setLoading(false);
         }
       };
     } catch (error) {
       console.error("Error uploading the image or sending data:", error);
-      alert("There was an error generating the link. Please try again.");
+      setLoading(false);
+      toast.dismiss();
+      toast.error("There was an error generating the link. Please try again.");
     }
-
-    // if (!file) {
-    //   alert("Please select a file before generating the link.");
-    //   return;
-    // }
-
-    // try {
-    //   // Upload image to Cloudinary
-    //   const formDataCloudinary = new FormData();
-    //   formDataCloudinary.append("file", file);
-    //   formDataCloudinary.append("upload_preset", "certificate_preset"); // Set up an unsigned preset in your Cloudinary account
-
-    //   const uploadResponse = await axios.post(
-    //     `https://api.cloudinary.com/v1_1/deqh1zzsy/image/upload`,
-    //     formDataCloudinary
-    //   );
-
-    //   const imageUrl = uploadResponse.data.secure_url;
-
-    //   // Send data to the backend
-    //   const response = await axios.post("http://localhost:3000/generate_link", {
-    //     ...formData,
-    //     imageUrl,
-    //   });
-
-    //   if (response.status === 200) {
-    //     console.log(imageUrl);
-    //     alert("Link generated successfully!");
-    //     setGenerate(true);
-    //   }
-    // } catch (error) {
-    //   console.error("Error uploading the image or sending data:", error);
-    //   alert("There was an error generating the link. Please try again.");
-    // }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setGenerate(true);
-  // };
 
   const handleBoxClick = () => {
     document.getElementById("file").click(); // Trigger file input click
+  };
+
+  const truncateFileName = (name) => {
+    if (name.length > 20) {
+      return name.slice(0, 20) + "...";
+    }
+    return name;
+  };
+
+  const copyUrl = (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    navigator.clipboard
+      .writeText(certificateUrl)
+      .then(() => {
+        toast.dismiss();
+        toast.success("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        toast.dismiss();
+        toast.error("Failed to copy text: ", err);
+      });
   };
 
   return (
@@ -139,17 +164,33 @@ const Hero = () => {
               onDragOver={(e) => e.preventDefault()}
               onClick={handleBoxClick}
               className="header__file__input"
+              style={{
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+              }}
             >
               {fileName ? (
                 <img src={assets.file_icon} alt="File Icon" /> // Show file icon if file is selected
               ) : (
                 <img src={assets.upload_button} alt="Upload Button" /> // Show upload button if no file is selected
               )}
-              <p>{fileName || "Drag & drop file here or browse to upload!"}</p>
+              {backgroundImage ? (
+                <></>
+              ) : (
+                <p>
+                  {fileName
+                    ? truncateFileName(fileName)
+                    : "Drag & drop file here or browse to upload!"}
+                </p>
+              )}
             </div>
             <label htmlFor="file" className="footer__file__input">
               <img src={assets.file_icon} alt="File Icon" />
-              <p>{fileName || "No selected file"}</p>
+              <p>
+                {fileName ? truncateFileName(fileName) : "No selected file"}
+              </p>
             </label>
             <input
               id="file"
@@ -163,93 +204,110 @@ const Hero = () => {
         {fileName && (
           <div className="animate__animated animate__fadeInRight animate__faster cert__details__form__div">
             <form className="form" onSubmit={handleSubmit}>
-              <p className="title">Details</p>
-              <p className="message">
-                Add details of your incredible achievement.
-              </p>
-              <label>
-                <input
-                  required
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="input"
-                  placeholder=""
-                />
-                <span>Name</span>
-              </label>
-              <label>
-                <input
-                  required
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  className="input"
-                  placeholder=""
-                />
-                <span>Title of certificate</span>
-              </label>
+              {!generate && (
+                <>
+                  <p className="title">Details</p>
+                  <p className="message">
+                    Add details of your incredible achievement.
+                  </p>
+                  <label>
+                    <input
+                      required
+                      type="text"
+                      minLength="3"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder=""
+                    />
+                    <span>Name</span>
+                  </label>
+                  <label>
+                    <input
+                      required
+                      minLength="5"
+                      type="text"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder=""
+                    />
+                    <span>Title of certificate</span>
+                  </label>
 
-              <label>
-                <input
-                  // required
-                  type="text"
-                  name="hashtags"
-                  value={formData.hashtags}
-                  onChange={handleChange}
-                  className="input"
-                  placeholder=""
-                />
-                <span>Tags</span>
-              </label>
+                  <label>
+                    <input
+                      // required
+                      type="text"
+                      name="hashtags"
+                      value={formData.hashtags}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder=""
+                    />
+                    <span>Tags (Comma separated) </span>
+                  </label>
 
-              <label>
-                <input
-                  required
-                  type="text"
-                  name="dateSelected"
-                  value={formData.dateSelected}
-                  onChange={handleChange}
-                  className="input"
-                  placeholder=""
-                />
-                <span>Date completed</span>
-              </label>
-              <label>
-                <textarea
-                  required
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="input"
-                  placeholder="Enter description of your achievement."
-                  style={{ height: "120px", resize: "none" }} // Static height for textarea
-                />
-              </label>
+                  <label>
+                    <input
+                      required
+                      type="date"
+                      name="dateSelected"
+                      value={formData.dateSelected}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder=""
+                    />
+                    <span>Date completed</span>
+                  </label>
+                  <label>
+                    <textarea
+                      required
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="input"
+                      placeholder="Enter description of your achievement."
+                      style={{ height: "120px", resize: "none" }} // Static height for textarea
+                    />
+                  </label>
+                </>
+              )}
+              {certificateUrl && (
+                <div className="success">
+                  <div className="success__title">{certificateUrl}</div>
+                </div>
+              )}
               {generate ? (
                 <div className="generated_url_div">
-                  <button className="submit">Copy Link</button>
+                  <button className="submit" onClick={copyUrl}>
+                    Copy Link
+                  </button>
                   <img
-                    className="edit__icon"
-                    src={assets.edit}
-                    alt="Edit Icon"
-                  />
-                  <img
+                    onClick={() => window.open(certificateUrl, "_blank")}
                     className="view__icon"
                     src={assets.view}
                     alt="View Icon"
                   />
                 </div>
               ) : (
-                <button className="submit" type="submit">
+                //  : loading ? ( // Show loader if loading is true
+                //   <div className="loader">
+                //     <p>hello</p>
+                //   </div>
+                // )
+                <button disabled={loading} className="submit" type="submit">
                   Generate Link
                 </button>
               )}
-              <p className="signin">
-                All your certificates in one place? <a href="#">Sign-up now</a>
-              </p>
+              {!verified && (
+                <p className="signin">
+                  All your certificates in one place?{" "}
+                  <a href="#">Sign-up now</a>
+                </p>
+              )}
             </form>
           </div>
         )}

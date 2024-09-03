@@ -28,7 +28,7 @@
 .certificate__title__text h2{
     font-size: var(--large-text);
     font-weight: 500;
-    word-break: break-word;
+    word-break: keep-all;
 }
 
 
@@ -159,7 +159,7 @@
     letter-spacing: 2px;
     font-weight: 800; 
     font-size: 55px;
-    word-break: break-word; 
+    word-break: keep-all; 
 }
 
 .cert__desc__div>h3{

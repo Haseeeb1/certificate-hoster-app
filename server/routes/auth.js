@@ -11,7 +11,6 @@ router.use(cookieParser());
 // Signup route
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(password);
   try {
     // Check if the user already exists
     let user = await User.findOne({ email });
@@ -36,7 +35,7 @@ router.post("/signup", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: false,
       // Set to true if in production
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      maxAge: 4 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res
@@ -73,7 +72,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
     res.cookie("token", token, {
       httpOnly: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+      maxAge: 4 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
     });
 
     res

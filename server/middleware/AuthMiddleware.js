@@ -4,7 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET; // Ensure this is set in your environ
 // Middleware to verify JWT token from the cookie
 const authMiddleware = (req, res, next) => {
   const token = req.body.token; // Retrieve token from cookies
-
+  
   if (!token) {
     return res.status(401).json({ msg: "No token provided" });
   }

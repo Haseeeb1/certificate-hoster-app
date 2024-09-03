@@ -4,6 +4,7 @@ const User = require("../models/User");
 const router = express.Router();
 const { v2: cloudinary } = require("cloudinary");
 const axios = require("axios");
+const authMiddleware = require("../middleware/AuthMiddleware");
 
 // Create a new certificate
 
@@ -47,43 +48,6 @@ router.post("/generate/certificate", async (req, res) => {
   }
 });
 
-// router.get("/certificate/:id", async (req, res) => {
-//   const certificateId = req.params.id;
-
-//   try {
-//     // Fetch certificate data from your database
-//     const certificateData = await Certificate.findById(certificateId);
-
-//     if (!certificateData) {
-//       // If no certificate found, return a 404 error
-//       return res.status(404).json({
-//         success: false,
-//         message: "Certificate not found",
-//       });
-//     }
-
-//     // Generate secure Cloudinary URL without any transformations
-//     const secureImageUrl = cloudinary.url(certificateData.imagePublicId, {
-//       secure: true,
-//       sign_url: true,
-//     });
-
-//     // Respond with the certificate data and secure image URL
-//     res.json({
-//       success: true,
-//       ...certificateData.toObject(),
-//       secureImageUrl,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching certificate:", error);
-
-//     // Return a 500 Internal Server Error if something goes wrong
-//     res.status(500).json({
-//       success: false,
-//       message: "An error occurred while fetching the certificate",
-//     });
-//   }
-// });
 
 router.get("/certificate/:id", async (req, res) => {
   const certificateId = req.params.id;
@@ -133,4 +97,64 @@ router.get("/certificate/:id", async (req, res) => {
     });
   }
 });
+
+
+router.post('/user/:id/certificates',authMiddleware, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // Find the user by ID and populate the certificates array
+    const user = await User.findById(userId).populate({
+      path: 'certificates',
+      options: { limit: 20
+       },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.certificates.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No certificates found",
+        certificates: [],
+      });
+    }
+
+      const certificates = await Promise.all(user.certificates.map(async (certificate) => {
+      // Generate secure Cloudinary URL
+      const secureImageUrl = cloudinary.url(certificate.imageUrl, {
+        secure: true,
+        sign_url: true,
+      });
+
+      // Fetch the image from Cloudinary
+      const imageResponse = await axios.get(secureImageUrl, {
+        responseType: 'arraybuffer',
+      });
+
+      // Convert the image to a base64 encoded string
+      const imageData = Buffer.from(imageResponse.data, 'binary').toString('base64');
+
+      // Return the certificate data with the image in base64 format
+      return {
+        ...certificate.toObject(),
+        imageUrl: null, // Set the imageUrl to null
+        imageData: `data:${imageResponse.headers['content-type']};base64,${imageData}`,
+      };
+    }));
+
+    // Respond with the certificates array
+    res.json({
+      success: true,
+      certificates,
+    });
+  } catch (error) {
+    console.error('Error fetching certificates:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while fetching certificates',
+    });
+  }
+});
+
 module.exports = router;

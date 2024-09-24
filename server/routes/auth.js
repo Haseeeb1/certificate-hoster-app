@@ -129,6 +129,8 @@ router.post("/verify-email", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
+      sameSite: "None",
       maxAge: 4 * 24 * 60 * 60 * 1000,
     });
 
@@ -168,6 +170,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
+      sameSite: "None",
       maxAge: 4 * 24 * 60 * 60 * 1000,
     });
 

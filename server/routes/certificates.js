@@ -9,10 +9,10 @@ const authMiddleware = require("../middleware/AuthMiddleware");
 const { rateLimit } = require("express-rate-limit");
 
 const limiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-  limit: 10, // each IP can make up to 10 requests per `windowMs` (24 hours)
-  standardHeaders: true, // add the `RateLimit-*` headers to the response
-  legacyHeaders: false, // remove the `X-RateLimit-*` headers from the response
+  windowMs: 24 * 60 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
 
   handler: (req, res) => {
     res.status(429).json({
@@ -21,7 +21,6 @@ const limiter = rateLimit({
     });
   },
 });
-// Create a new certificate
 
 router.post("/generate/certificate", limiter, async (req, res) => {
   try {
@@ -38,12 +37,10 @@ router.post("/generate/certificate", limiter, async (req, res) => {
         });
       }
     }
-    // Upload the image to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(data, {
-      folder: "certificates", // Specify a folder if you like
+      folder: "certificates",
     });
 
-    // Create a new certificate with the uploaded image URL
     const certificate = new Certificate({
       name,
       title,
@@ -53,10 +50,8 @@ router.post("/generate/certificate", limiter, async (req, res) => {
       imageUrl: uploadResponse.secure_url,
     });
 
-    // Save the certificate to the database
     await certificate.save();
 
-    // If a user ID is provided, associate the certificate with the user
     if (userId) {
       const user = await User.findById(userId);
       if (user) {
@@ -65,7 +60,6 @@ router.post("/generate/certificate", limiter, async (req, res) => {
       }
     }
 
-    // Return the certificate details along with the URL and image URL
     res.status(201).json(certificate._id);
   } catch (error) {
     console.error("Error generating the certificate:", error);
@@ -77,35 +71,29 @@ router.get("/certificate/:id", async (req, res) => {
   const certificateId = req.params.id;
 
   try {
-    // Fetch certificate data from your database
     const certificateData = await Certificate.findById(certificateId);
 
     if (!certificateData) {
-      // If no certificate found, return a 404 error
       return res.status(404).json({
         success: false,
         message: "Certificate not found",
       });
     }
 
-    // Generate secure Cloudinary URL without any transformations
     const secureImageUrl = cloudinary.url(certificateData.imageUrl, {
       secure: true,
       sign_url: true,
     });
 
-    // Fetch the image from Cloudinary
     const imageResponse = await axios.get(secureImageUrl, {
       responseType: "arraybuffer",
     });
 
-    // Send the image data as a base64 encoded string
     const imageData = Buffer.from(imageResponse.data, "binary").toString(
       "base64"
     );
 
     certificateData.imageUrl = null;
-    // Respond with the certificate data and the base64 encoded image
     res.json({
       success: true,
       ...certificateData.toObject(),
@@ -114,7 +102,6 @@ router.get("/certificate/:id", async (req, res) => {
   } catch (error) {
     console.error("Error fetching certificate:", error);
 
-    // Return a 500 Internal Server Error if something goes wrong
     res.status(500).json({
       success: false,
       message: "An error occurred while fetching the certificate",
@@ -125,7 +112,6 @@ router.get("/certificate/:id", async (req, res) => {
 router.post("/user/:id/certificates", authMiddleware, async (req, res) => {
   try {
     const userId = req.params.id;
-    // Find the user by ID and populate the certificates array
     const user = await User.findById(userId).populate({
       path: "certificates",
       options: { limit: 20 },
@@ -144,32 +130,27 @@ router.post("/user/:id/certificates", authMiddleware, async (req, res) => {
 
     const certificates = await Promise.all(
       user.certificates.map(async (certificate) => {
-        // Generate secure Cloudinary URL
         const secureImageUrl = cloudinary.url(certificate.imageUrl, {
           secure: true,
           sign_url: true,
         });
 
-        // Fetch the image from Cloudinary
         const imageResponse = await axios.get(secureImageUrl, {
           responseType: "arraybuffer",
         });
 
-        // Convert the image to a base64 encoded string
         const imageData = Buffer.from(imageResponse.data, "binary").toString(
           "base64"
         );
 
-        // Return the certificate data with the image in base64 format
         return {
           ...certificate.toObject(),
-          imageUrl: null, // Set the imageUrl to null
+          imageUrl: null,
           imageData: `data:${imageResponse.headers["content-type"]};base64,${imageData}`,
         };
       })
     );
 
-    // Respond with the certificates array
     res.json({
       success: true,
       certificates,
@@ -183,11 +164,9 @@ router.post("/user/:id/certificates", authMiddleware, async (req, res) => {
   }
 });
 
-// Delete a certificate
 router.delete("/certificate/:id", authMiddleware, async (req, res) => {
   const certificateId = req.params.id;
   try {
-    // Find the certificate by ID
     const certificate = await Certificate.findById(certificateId);
 
     if (!certificate) {
@@ -196,20 +175,16 @@ router.delete("/certificate/:id", authMiddleware, async (req, res) => {
         .json({ success: false, message: "Certificate not found" });
     }
 
-    // Remove the image from Cloudinary
-    const publicId = certificate.imageUrl.split("/").pop().split(".")[0]; // Extract public ID from Cloudinary URL
-    await cloudinary.uploader.destroy(`certificates/${publicId}`); // Delete the image from Cloudinary
+    const publicId = certificate.imageUrl.split("/").pop().split(".")[0];
+    await cloudinary.uploader.destroy(`certificates/${publicId}`);
 
-    // Delete the certificate from the Certificate collection
     await Certificate.findByIdAndDelete(certificateId);
 
-    // Remove the certificate from the associated user's certificates array
     await User.updateMany(
       { certificates: certificateId },
       { $pull: { certificates: certificateId } }
     );
 
-    // Return success response
     res
       .status(200)
       .json({ success: true, message: "Certificate deleted successfully" });
@@ -228,7 +203,6 @@ router.put("/certificate/:id", limiter, authMiddleware, async (req, res) => {
   const { name, title, hashtags, dateSelected, message } = formData || {};
 
   try {
-    // Find the existing certificate
     const certificate = await Certificate.findById(certificateId);
     if (!certificate) {
       return res
@@ -236,27 +210,23 @@ router.put("/certificate/:id", limiter, authMiddleware, async (req, res) => {
         .json({ success: false, message: "Certificate not found" });
     }
 
-    // If a new image is provided, upload it to Cloudinary
-    let imageUrl = certificate.imageUrl; // Keep existing image URL unless updated
+    let imageUrl = certificate.imageUrl;
     if (data) {
       const uploadResponse = await cloudinary.uploader.upload(data, {
-        folder: "certificates", // Specify a folder if you like
+        folder: "certificates",
       });
-      imageUrl = uploadResponse.secure_url; // Update image URL to the new one
+      imageUrl = uploadResponse.secure_url;
     }
 
-    // Update the certificate fields
     certificate.name = name || certificate.name;
     certificate.title = title || certificate.title;
     certificate.hashtags = hashtags || certificate.hashtags;
     certificate.dateSelected = dateSelected || certificate.dateSelected;
     certificate.message = message || certificate.message;
-    certificate.imageUrl = imageUrl; // Update image URL
+    certificate.imageUrl = imageUrl;
 
-    // Save the updated certificate
     await certificate.save();
 
-    // Return the updated certificate details
     res.status(200).json({
       success: true,
       message: "Certificate updated successfully",

@@ -21,7 +21,6 @@ cloudinary.config({
 
 app.use(cors({ origin: true, credentials: true }));
 
-// Middleware to parse JSON requests
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", certificateRoute);
@@ -30,12 +29,10 @@ app.post("/verify", authMiddleware, (req, res) => {
   res.status(200).json({ valid: true, user: req.user });
 });
 
-// Define a simple route
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

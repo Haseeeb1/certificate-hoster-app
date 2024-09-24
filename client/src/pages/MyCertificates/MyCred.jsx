@@ -25,11 +25,10 @@ const MyCred = ({ verified }) => {
         const token = Cookies.get("token");
         const response = await axios.post(
           `${server_url}/api/user/${userId}/certificates`,
-          { token } // Send the token in the request body
+          { token }
         );
-        const { certificates } = response.data; // Assuming the certificates are inside response.data.certificates
+        const { certificates } = response.data;
         setCertificates(certificates);
-        console.log(certificates);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -70,20 +69,6 @@ const MyCred = ({ verified }) => {
           <div className="light__not__found"></div>
           <div className="black_overlay__not__found"></div>
         </div>
-        {/* <div className="not__found__terminal-loader">
-          <div className="not__found__terminal-header">
-            <div className="not__found__terminal-title">Status</div>
-            <div className="not__found__terminal-controls">
-              <div className="not__found__control not__found__close"></div>
-              <div className="not__found__control not__found__minimize"></div>
-              <div className="not__found__control not__found__maximize"></div>
-            </div>
-          </div>
-          <div className="not__found__content">
-            <div className="not__found__text">No certificate data found...</div>
-          </div>
-        </div> */}
-        {/* </div> */}
       </div>
     );
   }
@@ -102,7 +87,7 @@ const MyCred = ({ verified }) => {
       <ul className="cards">
         {certificates.map((certificate) => (
           <MyCertificateCard
-            key={certificate._id} // Use a unique key for each card
+            key={certificate._id}
             id={certificate._id}
             name={certificate.name}
             title={certificate.title}

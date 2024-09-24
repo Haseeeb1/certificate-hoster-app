@@ -40,7 +40,7 @@ const CertificateNav = ({ verified }) => {
       }
     });
   };
-  const name = localStorage.getItem("name"); // Fetch the name from local storage
+  const name = localStorage.getItem("name");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "";
 
   return (
@@ -80,26 +80,13 @@ const CertificateNav = ({ verified }) => {
                 </Link>
               </li>
             </ul>
-            {/* {verified && (
-              <div className="avatar-container">
-                <button onClick={logout}>LogOut</button>
-                <div className="avatar">
-                  <div className="avatar__letter">{firstLetter}</div>
-                </div>
-              </div>
-            )} */}
+
             {verified && (
               <>
                 <div className="avatar-container">
                   <div className="avatar">
                     <div className="avatar__letter">{firstLetter}</div>
                   </div>
-
-                  {/* {isDropdownOpen && (
-                  <div className="dropdown-menu">
-                    <button onClick={logout}>LogOut</button>
-                  </div>
-                )} */}
                 </div>
                 <button className="button__login" onClick={logout}>
                   Log Out
@@ -107,14 +94,12 @@ const CertificateNav = ({ verified }) => {
               </>
             )}
           </div>
-          {/* Close button */}
           <div className="nav__close" id="nav-close" onClick={toggleMenu}>
             <FiX />
           </div>
         </div>
 
         <div className="nav__actions">
-          {/* Toggle button */}
           <div className="nav__toggle" id="nav-toggle" onClick={toggleMenu}>
             <FiMenu />
           </div>

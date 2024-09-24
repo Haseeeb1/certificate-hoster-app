@@ -15,15 +15,11 @@ const Certificate = () => {
   useEffect(() => {
     const fetchCertificateData = async () => {
       try {
-        // Attempt to fetch certificate data from the backend
         const response = await axios.get(`${server_url}/api/certificate/${id}`);
         setCertificateData(response.data);
-        console.log(response.data);
       } catch (err) {
-        // If an error occurs, set the error state
         console.error("Error fetching certificate data:", err);
       } finally {
-        // Always set loading to false after the request is completed
         setLoading(false);
       }
     };

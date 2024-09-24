@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const EditHero = ({ verified }) => {
   const location = useLocation();
-  const { certificateData } = location.state || {}; // Get certificateData from state
+  const { certificateData } = location.state || {};
 
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState(null);
@@ -91,14 +91,13 @@ const EditHero = ({ verified }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if any data has changed
     const hasChanges =
       formData.name !== certificateData.name ||
       formData.title !== certificateData.title ||
       formData.hashtags !== certificateData.hashtags ||
       formData.dateSelected !== certificateData.dateSelected ||
       formData.message !== certificateData.message ||
-      (file !== null && fileName !== ""); // Check if a new file is being uploaded
+      (file !== null && fileName !== "");
 
     if (!hasChanges) {
       toast.dismiss();
@@ -110,7 +109,6 @@ const EditHero = ({ verified }) => {
     try {
       let base64Data = null;
 
-      // Only read the file if one is provided
       if (file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -124,7 +122,7 @@ const EditHero = ({ verified }) => {
         `${server_url}/api/certificate/${certificateData.id}`,
         {
           token: Cookies.get("token"),
-          data: base64Data, // Send base64Data if file is provided
+          data: base64Data,
           formData,
         }
       );
@@ -140,7 +138,6 @@ const EditHero = ({ verified }) => {
       }
     } catch (error) {
       if (error.response && error.response.status === 429) {
-        // Rate limit exceeded
         toast.error(error.response.data.message);
       } else {
         console.error("Error uploading the image or sending data:", error);

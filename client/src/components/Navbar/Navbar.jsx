@@ -43,7 +43,7 @@ const Navbar = ({ verified }) => {
       }
     });
   };
-  const name = localStorage.getItem("name"); // Fetch the name from local storage
+  const name = localStorage.getItem("name");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "";
 
   return (
@@ -81,11 +81,6 @@ const Navbar = ({ verified }) => {
                   About
                 </Link>
               </li>
-              {/* <li className="nav__item">
-                <Link onClick={toggleMenu} to="/support" className="nav__link">
-                  Support Us
-                </Link>
-              </li> */}
             </ul>
             {verified ? (
               <>
@@ -93,12 +88,6 @@ const Navbar = ({ verified }) => {
                   <div className="avatar">
                     <div className="avatar__letter">{firstLetter}</div>
                   </div>
-
-                  {/* {isDropdownOpen && (
-                  <div className="dropdown-menu">
-                    <button onClick={logout}>LogOut</button>
-                  </div>
-                )} */}
                 </div>
                 <button className="button__login" onClick={logout}>
                   Log Out
@@ -112,14 +101,12 @@ const Navbar = ({ verified }) => {
               </Link>
             )}
           </div>
-          {/* Close button */}
           <div className="nav__close" id="nav-close" onClick={toggleMenu}>
             <FiX />
           </div>
         </div>
 
         <div className="nav__actions">
-          {/* Toggle button */}
           <div className="nav__toggle" id="nav-toggle" onClick={toggleMenu}>
             <FiMenu />
           </div>

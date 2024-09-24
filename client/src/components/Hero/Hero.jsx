@@ -49,7 +49,6 @@ const Hero = ({ verified }) => {
 
     if (selectedFile) {
       if (selectedFile.size <= 3 * 1024 * 1024) {
-        // Check if file size is <= 3 MB
         if (
           selectedFile.type === "image/jpeg" ||
           selectedFile.type === "image/png"
@@ -88,7 +87,7 @@ const Hero = ({ verified }) => {
     }
 
     setLoading(true);
-    setGenerate(false); // Reset generate state before attempting to submit
+    setGenerate(false);
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -121,15 +120,14 @@ const Hero = ({ verified }) => {
         }
       } catch (error) {
         if (error.response && error.response.status === 429) {
-          // Rate limit exceeded
           toast.error(error.response.data.message);
         } else {
           toast.dismiss();
           toast.error(error.response?.data?.error || "An error occurred.");
-          console.error("Error uploading certificate:", error); // Log error to console for debugging
+          console.error("Error uploading certificate:", error);
         }
       } finally {
-        setLoading(false); // Ensure loading is reset whether it succeeded or failed
+        setLoading(false);
       }
     };
 
@@ -141,57 +139,8 @@ const Hero = ({ verified }) => {
     };
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!file) {
-  //     toast.dismiss();
-  //     toast.error("Please select a file before generating the link.");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   setGenerate(false); // Reset generate state before attempting to submit
-
-  //   try {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onloadend = async () => {
-  //       const base64Data = reader.result;
-
-  //       const response = await axios.post(
-  //         `${server_url}/api/generate/certificate`,
-  //         {
-  //           data: base64Data,
-  //           formData,
-  //         }
-  //       );
-
-  //       if (response.status === 201) {
-  //         const certificateId = response.data;
-  //         setCertificateUrl(`${frontend_url}/cred/${certificateId}`);
-  //         toast.dismiss();
-  //         toast.success("Link generated successfully!");
-  //         setGenerate(true);
-  //         setFormData({
-  //           name: "",
-  //           title: "",
-  //           hashtags: "",
-  //           dateSelected: "",
-  //           message: "",
-  //           userId: userId,
-  //         });
-  //       }
-  //     };
-  //   } catch (error) {
-  //     alert("hello");
-  //   } finally {
-  //     setLoading(false); // Ensure loading is reset whether it succeeded or failed
-  //   }
-  // };
-
   const handleBoxClick = () => {
-    document.getElementById("file").click(); // Trigger file input click
+    document.getElementById("file").click();
   };
 
   const truncateFileName = (name) => {
@@ -202,7 +151,7 @@ const Hero = ({ verified }) => {
   };
 
   const copyUrl = (event) => {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
 
     navigator.clipboard
       .writeText(certificateUrl)
@@ -224,7 +173,6 @@ const Hero = ({ verified }) => {
     setCertificateUrl(null);
     setLoading(false);
 
-    // Reset form fields
     setFormData({
       name: "",
       title: "",
@@ -258,9 +206,9 @@ const Hero = ({ verified }) => {
               }}
             >
               {fileName ? (
-                <img src={assets.file_icon} alt="File Icon" /> // Show file icon if file is selected
+                <img src={assets.file_icon} alt="File Icon" />
               ) : (
-                <img src={assets.upload_button} alt="Upload Button" /> // Show upload button if no file is selected
+                <img src={assets.upload_button} alt="Upload Button" />
               )}
               {backgroundImage ? (
                 <></>
@@ -325,7 +273,6 @@ const Hero = ({ verified }) => {
 
                   <label>
                     <input
-                      // required
                       type="text"
                       name="hashtags"
                       value={formData.hashtags}
@@ -356,7 +303,7 @@ const Hero = ({ verified }) => {
                       onChange={handleChange}
                       className="input"
                       placeholder="Enter description of your achievement."
-                      style={{ height: "120px", resize: "none" }} // Static height for textarea
+                      style={{ height: "120px", resize: "none" }}
                     />
                   </label>
                 </>
@@ -387,21 +334,10 @@ const Hero = ({ verified }) => {
                       onClick={handleRefresh}
                       title="Create new"
                     />
-                    {/* <img
-                      onClick={() => window.open(certificateUrl, "_blank")}
-                      className="view__icon"
-                      src={assets.view}
-                      alt="View Icon"
-                    /> */}
                   </div>
                   <div className="create__again__div"></div>
                 </>
               ) : (
-                //  : loading ? ( // Show loader if loading is true
-                //   <div className="loader">
-                //     <p>hello</p>
-                //   </div>
-                // )
                 <>
                   {loading ? (
                     <>
@@ -423,9 +359,6 @@ const Hero = ({ verified }) => {
                       Generate Link
                     </button>
                   )}
-                  {/* <button disabled={loading} className="submit" type="submit">
-                    Generate Link
-                  </button> */}
                 </>
               )}
               {!verified && (

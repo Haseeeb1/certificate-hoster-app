@@ -1,7 +1,6 @@
 import "./Footer.css";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Footer = ({ verified }) => {
@@ -60,25 +59,6 @@ const Footer = ({ verified }) => {
             About
           </a>
         </li>
-        {/* <li className="menu__item">
-          <a
-            className="menu__link"
-            onClick={() => navigate("/support")}
-            href="#"
-          >
-            Support Us
-          </a>
-        </li> */}
-        {/* <li className="menu__item">
-          <a className="menu__link" href="#">
-            Team
-          </a>
-        </li>
-        <li className="menu__item">
-          <a className="menu__link" href="#">
-            Contact
-          </a>
-        </li> */}
       </ul>
 
       <p>&copy;2024 Haseeb Ul Hassan | Cert-Vault </p>

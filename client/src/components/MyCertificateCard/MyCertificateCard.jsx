@@ -52,7 +52,6 @@ const MyCertificateCard = ({
 
         if (response.status === 200) {
           toast.success("Certificate deleted successfully");
-          // Call the onDelete handler to remove from the UI
           if (onDelete) {
             onDelete(certId);
           }
@@ -76,7 +75,7 @@ const MyCertificateCard = ({
       dateSelected,
       imageData,
     };
-    navigate("/edit", { state: { certificateData } }); // Passing the data as state
+    navigate("/edit", { state: { certificateData } });
   };
 
   const openInNewTab = (id) => {
@@ -116,10 +115,6 @@ const MyCertificateCard = ({
               </div>
             </div>
           </div>
-          {/* <p className="card__description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores,
-            blanditiis?
-          </p> */}
         </div>
       </a>
     </li>

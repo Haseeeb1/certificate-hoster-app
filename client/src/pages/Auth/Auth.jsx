@@ -25,7 +25,6 @@ const Auth = ({ verified }) => {
   const [code, setCode] = useState("");
 
   useEffect(() => {
-    // Redirect to home page if the user is verified
     if (verified) {
       navigate("/");
     }
@@ -46,7 +45,6 @@ const Auth = ({ verified }) => {
   };
 
   const handleBulletClick = (index) => {
-    // Ensure index is within bounds
     if (index < 1 || index > 3) return;
 
     imagesRefs.current.forEach((img, i) => {
@@ -67,7 +65,6 @@ const Auth = ({ verified }) => {
   };
 
   useEffect(() => {
-    // Handle bullet click events
     const localBulletsRefs = bulletsRefs.current;
     localBulletsRefs.forEach((bullet, index) => {
       if (bullet) {
@@ -88,7 +85,6 @@ const Auth = ({ verified }) => {
   }, []);
 
   useEffect(() => {
-    // Ensure the first image and bullet are "active" when the page first loads
     if (imagesRefs.current[0]) {
       imagesRefs.current[0].classList.add("show");
     }
@@ -98,7 +94,6 @@ const Auth = ({ verified }) => {
   }, []);
 
   useEffect(() => {
-    // Auto-change carousel every 2 seconds
     const interval = setInterval(() => {
       const nextIndex = (currentIndex % 3) + 1;
       handleBulletClick(nextIndex);
@@ -129,7 +124,7 @@ const Auth = ({ verified }) => {
       return;
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `${server_url}/api/auth/signup`,
         {
           name,
@@ -143,61 +138,18 @@ const Auth = ({ verified }) => {
           withCredentials: true,
         }
       );
+
       toast.dismiss();
       toast.success(
         "Sign up successful. A verification code has been sent to your email."
       );
       setVerificationCodeSent(true);
-
-      // Navigate or prompt user to enter verification code
     } catch (error) {
       toast.error(error.response?.data?.msg || "Signup failed");
     } finally {
       setLoading(false);
     }
   };
-
-  // const handleSignUp = async (e) => {
-  //   e.preventDefault();
-  //   const name = nameRef.current.value;
-  //   const email = emailRef.current.value;
-  //   const password = passwordRef.current.value;
-
-  //   const validationError = validateSignUp(name, email, password);
-  //   if (validationError) {
-  //     toast.error(validationError);
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${server_url}/api/auth/signup`,
-  //       {
-  //         name,
-  //         email,
-  //         password,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         withCredentials: true,
-  //       }
-  //     );
-
-  //     toast.dismiss();
-  //     toast.success("Sign up successfull");
-  //     localStorage.setItem("name", response.data.name);
-  //     localStorage.setItem("email", response.data.email);
-  //     localStorage.setItem("id", response.data.id);
-  //     navigate("/");
-  //     window.location.reload();
-  //   } catch (error) {
-  //     // console.error("Error signing up", error);
-  //     toast.dismiss();
-  //     toast.error(error.response?.data?.msg || "Signup failed");
-  //   }
-  // };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -216,7 +168,7 @@ const Auth = ({ verified }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true, // Important to include credentials
+          withCredentials: true,
         }
       );
 
@@ -227,7 +179,7 @@ const Auth = ({ verified }) => {
       window.location.reload();
     } catch (error) {
       if (error.response?.data?.requireVerification) {
-        setVerificationCodeSent(true); // Show verification input if not verified
+        setVerificationCodeSent(true);
         toast.dismiss();
         toast.error("Please verify your email before logging in.");
       } else {
@@ -254,7 +206,7 @@ const Auth = ({ verified }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true, // Important to include credentials
+          withCredentials: true,
         }
       );
 
@@ -282,48 +234,14 @@ const Auth = ({ verified }) => {
   };
 
   const handleRefresh = () => {
-    setVerificationCodeSent(false); // Hide the verification form
-    setIsSignUpMode(false); // Switch to sign-in form if in sign-up mode
+    setVerificationCodeSent(false);
+    setIsSignUpMode(false);
     setCode("");
     setLoginEmail("");
 
-    // Reset input fields for login
     if (loginEmailRef.current) loginEmailRef.current.value = "";
     if (loginPasswordRef.current) loginPasswordRef.current.value = "";
   };
-
-  console.log("hh");
-  // const handleSignIn = async (e) => {
-  //   e.preventDefault();
-  //   const email = loginEmailRef.current.value;
-  //   const password = loginPasswordRef.current.value;
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${server_url}/api/auth/login`,
-  //       {
-  //         email,
-  //         password,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         withCredentials: true, // Important to include credentials
-  //       }
-  //     );
-  //     console.log("User logged in successfully", response.data);
-  //     localStorage.setItem("name", response.data.name);
-  //     localStorage.setItem("email", response.data.email);
-  //     localStorage.setItem("id", response.data.id);
-  //     navigate("/");
-  //     window.location.reload();
-  //   } catch (error) {
-  //     // console.error("Error logging in", error);
-  //     toast.dismiss();
-  //     toast.error(error.response?.data?.msg || "Login failed");
-  //   }
-  // };
 
   return (
     <main
@@ -455,9 +373,6 @@ const Auth = ({ verified }) => {
                         className="sign-btn"
                       />
                     )}
-                    {/* <p className="text">
-                      Forgotten your password? <a href="#">Get help</a>
-                    </p> */}
                   </div>
                 </form>
 
@@ -538,11 +453,6 @@ const Auth = ({ verified }) => {
                         className="sign-btn"
                       />
                     )}
-                    {/* <p className="text">
-                      By signing up, I agree to the{" "}
-                      <a href="#">Terms of Services</a> and{" "}
-                      <a href="#">Privacy Policy</a>
-                    </p> */}
                   </div>
                 </form>
               </>

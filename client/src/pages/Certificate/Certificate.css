@@ -1,210 +1,196 @@
-.certificate__div__main{
-    max-width: 1800px;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5rem;
-    min-width: auto;
-    display: flex;
-    flex-direction: column;
-    gap:40px;
-    margin-bottom: 25px;
+.certificate__div__main {
+  max-width: 1800px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5rem;
+  min-width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 25px;
 }
 
-.certificate__title_div{
-    display: flex;
-    align-items: center;
-    justify-content: center;    
+.certificate__title_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-
-.certificate__title__text p{
-    font-size: var(--medium-text);
-    font-weight: 400;
+.certificate__title__text p {
+  font-size: var(--medium-text);
+  font-weight: 400;
 }
 
-.certificate__title__text h2{
-    font-size: var(--large-text);
-    font-weight: 500;
-    word-break: keep-all;
+.certificate__title__text h2 {
+  font-size: var(--large-text);
+  font-weight: 500;
+  word-break: keep-all;
 }
-
 
 .certificate__details__div {
-    display: flex;
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto;
-    gap: 20px;
-  }
-  
-  .certificate__details__left {
-    min-height: 400px;
- /* Set max height to 600px */
-    flex: 0 0 40%;
-    background-image: url('../../assets/bg-deisgn.png');
-    background-repeat: no-repeat;
-    background-size: cover; /* Ensure the image covers the entire div */
-    background-position: center; /* Center the background image */
-    border-radius: 20px;
-    padding: 20px;
-  }
-  
-  .certificate__details__right {
-    min-height: 400px;
-    max-height: 600px; /* Set max height to 600px */
-    flex: 0 0 60%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .certificate__img {
-    max-width: 100%;
-    max-height: 100%; /* Ensure the image fits within the div */
-    object-fit: contain; /* Ensure the image is fully contained within the div */
-    height: auto; /* Maintain aspect ratio */
-  }
-  
-  @media screen and (max-width: 900px) {
-    .certificate__details__div {
-      flex-direction: column-reverse;
-      gap: 10px;
-    }
-   
-    
-    .certificate__details__right {
-      flex: 1 1 100%;
-      max-height: 400px; /* Reduce max height for smaller screens */
-    }
-    .certificate__details__left{
-        flex: 1 1 100%;
-        max-height: fit-content;
-    }
-  
-    .certificate__img {
-      width: 100%;
-      max-height: 400px; /* Ensure the image fits within the div */
-      height: 400px; /* Maintain aspect ratio */
-      object-fit: contain; /* Ensure the image is fully contained within the div */
-    }
-  }
-  
-  
-  @media screen and (max-width: 600px) {
+  display: flex;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  gap: 20px;
+}
 
-    
-    .certificate__details__right {
-        margin-top: -30px;
-        min-height: 300px;
-    }
-    .certificate__img {
-        width: 100%;
-        height: 350px; 
-        object-fit:contain; 
-      }
+.certificate__details__left {
+  min-height: 400px;
+  /* Set max height to 600px */
+  flex: 0 0 40%;
+  background-image: url("../../assets/bg-deisgn.png");
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensure the image covers the entire div */
+  background-position: center; /* Center the background image */
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.certificate__details__right {
+  min-height: 400px;
+  max-height: 600px; /* Set max height to 600px */
+  flex: 0 0 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.certificate__img {
+  max-width: 100%;
+  max-height: 100%; /* Ensure the image fits within the div */
+  object-fit: contain; /* Ensure the image is fully contained within the div */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@media screen and (max-width: 900px) {
+  .certificate__details__div {
+    flex-direction: column-reverse;
+    gap: 10px;
   }
-  @media screen and (max-width: 450px) {
-    .certificate__details__left{
-      max-height: fit-content;
-    }
-    }
+
+  .certificate__details__right {
+    flex: 1 1 100%;
+    max-height: 400px; /* Reduce max height for smaller screens */
+  }
+  .certificate__details__left {
+    flex: 1 1 100%;
+    max-height: fit-content;
+  }
+
+  .certificate__img {
+    width: 100%;
+    max-height: 400px; /* Ensure the image fits within the div */
+    height: 400px; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the image is fully contained within the div */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .certificate__details__right {
+    margin-top: -30px;
+    min-height: 300px;
+  }
+  .certificate__img {
+    width: 100%;
+    height: 350px;
+    object-fit: contain;
+  }
+}
+@media screen and (max-width: 450px) {
+  .certificate__details__left {
+    max-height: fit-content;
+  }
+}
 @media screen and (min-width: 1023px) {
-    .certificate__div__main{
-      margin-top: calc(3.5rem + 3.5rem);
-    }
+  .certificate__div__main {
+    margin-top: calc(3.5rem + 3.5rem);
+  }
 }
 
 .bg-pattern {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40vw;  
-    height: 72vh;  
-    background: url('../../assets/bg-pattern.svg') no-repeat;
-    background-size: contain;
-    z-index: 99; 
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40vw;
+  height: 72vh;
+  background: url("../../assets/bg-pattern.svg") no-repeat;
+  background-size: contain;
+  z-index: 99;
+}
+
+@media screen and (max-width: 1300px) {
+  .bg-pattern {
+    display: none;
   }
-
-  @media screen  and (max-width:1300px){
-    .bg-pattern{
-        display: none;
-    }
-    
-  }
-
-
-  .certificate__details__left{
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    flex-direction: column;
-    padding: 40px;
-    color: #ffff;
-    z-index: 99;
-    
 }
 
-
-
-.logo-header__div{
-    display: flex;
-    align-items: center;
+.certificate__details__left {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-direction: column;
+  padding: 40px;
+  color: #ffff;
+  z-index: 99;
 }
 
-.cert__name__div >h1{
-    
-    letter-spacing: 2px;
-    font-weight: 800; 
-    font-size: 55px;
-    word-break: keep-all; 
+.logo-header__div {
+  display: flex;
+  align-items: center;
 }
 
-.cert__desc__div>h3{
+.cert__name__div > h1 {
+  letter-spacing: 2px;
+  font-weight: 800;
+  font-size: 55px;
+  word-break: keep-all;
+}
+
+.cert__desc__div > h3 {
   font-weight: 500;
   font-size: 20px;
 }
 
-.cert__desc__div>h4{
-    font-weight: 300;
-    font-size: 15px;
+.cert__desc__div > h4 {
+  font-weight: 300;
+  font-size: 15px;
 }
 
-.cert__date__div>h3{
-    font-weight: 500;
-    font-size: 20px;
+.cert__date__div > h3 {
+  font-weight: 500;
+  font-size: 20px;
 }
 
-@media screen and (max-width:1000px) {
-    .cert__name__div >h1{
-        font-size: 40px;
-    }
-    
-    .cert__desc__div>h3{
-      font-size: 17px;
-    }
-    
-    .cert__desc__div>h4{
-        font-size: 11px;
-    }
-    
-    .cert__date__div>h3{
-        font-size: 27px;
-    }
+@media screen and (max-width: 1000px) {
+  .cert__name__div > h1 {
+    font-size: 40px;
+  }
+
+  .cert__desc__div > h3 {
+    font-size: 17px;
+  }
+
+  .cert__desc__div > h4 {
+    font-size: 11px;
+  }
+
+  .cert__date__div > h3 {
+    font-size: 27px;
+  }
 }
 
-  
 @media screen and (max-width: 550px) {
-    .certificate__div__main{
+  .certificate__div__main {
     max-width: 1800px;
     padding-left: 20px;
     padding-right: 20px;
-}
+  }
 }
 
-.loader-container{
+.loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -216,55 +202,50 @@
   width: 60px;
   height: 60px;
   position: relative;
- }
- 
- .spinner .dot {
+}
+
+.spinner .dot {
   position: absolute;
   inset: 0;
   display: flex;
   justify-content: center;
- }
- 
- .spinner .dot::after {
+}
+
+.spinner .dot::after {
   content: "";
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background-color: rgb(0, 0, 0);
- }
- 
- @keyframes spin {
+}
+
+@keyframes spin {
   to {
-   transform: rotate(360deg);
+    transform: rotate(360deg);
   }
- }
- 
- .spinner .dot {
+}
+
+.spinner .dot {
   animation: spin 2s infinite;
- }
- 
- .spinner .dot:nth-child(2) {
+}
+
+.spinner .dot:nth-child(2) {
   animation-delay: 100ms;
- }
- 
- .spinner .dot:nth-child(3) {
+}
+
+.spinner .dot:nth-child(3) {
   animation-delay: 200ms;
- }
- 
- .spinner .dot:nth-child(4) {
+}
+
+.spinner .dot:nth-child(4) {
   animation-delay: 300ms;
- }
- 
- .spinner .dot:nth-child(5) {
+}
+
+.spinner .dot:nth-child(5) {
   animation-delay: 400ms;
- }
+}
 
-
-
-
-
-
- @keyframes blinkCursor {
+@keyframes blinkCursor {
   50% {
     border-right-color: transparent;
   }
@@ -287,7 +268,7 @@
   }
 }
 
-.not__found__error-screen{
+.not__found__error-screen {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -297,31 +278,28 @@
   height: 100vh;
 }
 
-.not__found__main>p{
-  font-size:1.3rem;
+.not__found__main > p {
+  font-size: 1.3rem;
   max-width: 500px;
 }
 
-@media screen and (max-width:430px) {
-  .not__found__main>p{
+@media screen and (max-width: 430px) {
+  .not__found__main > p {
     padding: 5px;
-    font-size:15px;
-    max-width:100%;
+    font-size: 15px;
+    max-width: 100%;
   }
-  
 }
 
-
-.create__span{
+.create__span {
   cursor: pointer;
   color: rgb(63, 61, 61);
   font-weight: 600;
   transition: 0.3s;
 }
-.create__span:hover{
+.create__span:hover {
   color: #000;
 }
-
 
 .loader__not__found {
   height: 2px;

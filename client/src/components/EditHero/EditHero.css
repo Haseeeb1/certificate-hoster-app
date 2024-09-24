@@ -1,192 +1,178 @@
-.hero__div__main{
-    max-width: 1800px;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5rem;
-    min-width: auto;
-    margin-bottom: 30px;
+.hero__div__main {
+  max-width: 1800px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5rem;
+  min-width: auto;
+  margin-bottom: 30px;
 }
-.hero__input__div{
+.hero__input__div {
   gap: 50px;
 }
 
-@media screen and (max-width:1200px) {
-  .hero__input__div{
+@media screen and (max-width: 1200px) {
+  .hero__input__div {
     gap: 30px;
     flex-direction: column;
     align-items: center;
-  }  
-  
+  }
 }
 
-.generate__link__div{
+.generate__link__div {
   display: flex;
   justify-content: center;
   width: 350px;
   margin: 20px auto;
 }
 
-
-
 .hero-image {
-    position: absolute;
-    left: -100px; /* Always hides 20% of the image to the left */
-    top: 60%;  /* Centers the image vertically within the section */
-    transform: translateY(-50%); /* Centers the image vertically */
-    width: 20vw; /* Sets the image width to 80% of the viewport width */
-    height: auto; /* Maintains the aspect ratio of the image */
-    min-width: 300px;
-    z-index: -999;
-  }
+  position: absolute;
+  left: -100px; /* Always hides 20% of the image to the left */
+  top: 60%; /* Centers the image vertically within the section */
+  transform: translateY(-50%); /* Centers the image vertically */
+  width: 20vw; /* Sets the image width to 80% of the viewport width */
+  height: auto; /* Maintains the aspect ratio of the image */
+  min-width: 300px;
+  z-index: -999;
+}
 
-  @media screen and (max-width: 1000px) 
-  {
-    .hero-image{
-        left: -160px;
-    }
+@media screen and (max-width: 1000px) {
+  .hero-image {
+    left: -160px;
   }
+}
 
-  @media screen and (max-width: 700px) 
-  {
-    .hero-image{
-        display: none;
-    }
+@media screen and (max-width: 700px) {
+  .hero-image {
+    display: none;
   }
+}
 
 @media screen and (min-width: 1023px) {
-
-    .hero__div__main{
-      margin-top: calc(3.5rem + 3.5rem);
-    }
+  .hero__div__main {
+    margin-top: calc(3.5rem + 3.5rem);
+  }
 }
 
-
-.hero__text__div{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
+.hero__text__div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
-.hero__text__div>p{
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.hero__text__div > p {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
-.hero__main__text{
-    font-size: clamp(16px, 2.8vw, calc(1800px * 2.8 / 100));
-    font-weight: 700;
-    
-}
-
-.hero__sub__text{
-    font-size: 1.4vw;
-    font-weight: 400;
+.hero__main__text {
+  font-size: clamp(16px, 2.8vw, calc(1800px * 2.8 / 100));
+  font-weight: 700;
 }
 
-@media screen and (max-width:900px) {
-    .hero__main__text{
-        font-size: 4.8vw;
-    }
-    
-    .hero__sub__text{
-        font-size: 2.4vw;
-    }
- 
+.hero__sub__text {
+  font-size: 1.4vw;
+  font-weight: 400;
 }
 
-@media screen and (max-width:600px) {
-    .hero__main__text{
-        font-size:4.5vw;
-    }
-    
-    .hero__sub__text{
-        font-size:3vw;
-    }
+@media screen and (max-width: 900px) {
+  .hero__main__text {
+    font-size: 4.8vw;
+  }
+
+  .hero__sub__text {
+    font-size: 2.4vw;
+  }
 }
 
-.hero__input__div{
-    margin-top: 3.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@media screen and (max-width: 600px) {
+  .hero__main__text {
+    font-size: 4.5vw;
+  }
+
+  .hero__sub__text {
+    font-size: 3vw;
+  }
+}
+
+.hero__input__div {
+  margin-top: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container__file__input {
-    height: 350px;
-    width: 350px;
-    border-radius: 10px;
-    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    justify-content: space-between;
-    padding: 10px;
-    gap: 5px;
-    background-color: rgba(0, 110, 255, 0.041);
-  }
-  
-  .header__file__input {
-    flex: 1;
-    width: 100%;
-    border: 2px dashed rgb(0, 0, 0);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  
-  .header__file__input svg {
-    height: 100px;
-  }
-  
-  .header__file__input p {
-    text-align: center;
-    color: black;
-  }
-  
-  .footer__file__input {
-    background-color: rgba(0, 110, 255, 0.075);
-    width: 100%;
-    margin-top: 5px;
-    height: 40px;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    color: black;
-    border: none;
-  }
-  
-  
-  .footer__file__input p {
-    flex: 1;
-    text-align: center;
-  }
+  height: 350px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  justify-content: space-between;
+  padding: 10px;
+  gap: 5px;
+  background-color: rgba(0, 110, 255, 0.041);
+}
 
-  .header__file__input{
-    cursor: pointer;
+.header__file__input {
+  flex: 1;
+  width: 100%;
+  border: 2px dashed rgb(0, 0, 0);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.header__file__input svg {
+  height: 100px;
+}
+
+.header__file__input p {
+  text-align: center;
+  color: black;
+}
+
+.footer__file__input {
+  background-color: rgba(0, 110, 255, 0.075);
+  width: 100%;
+  margin-top: 5px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: black;
+  border: none;
+}
+
+.footer__file__input p {
+  flex: 1;
+  text-align: center;
+}
+
+.header__file__input {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .container__file__input {
+    height: 300px;
+    width: 300px;
   }
+}
 
-  @media screen and (max-width: 500px) {
-    .container__file__input {
-      height: 300px;
-      width: 300px;
-    }
-    
-
-  }
-
-
-  /* From Uiverse.io by Yaya12085 */ 
+/* From Uiverse.io by Yaya12085 */
 .form {
   display: flex;
   flex-direction: column;
@@ -207,7 +193,8 @@
   padding-left: 30px;
 }
 
-.title::before,.title::after {
+.title::before,
+.title::after {
   position: absolute;
   content: "";
   height: 16px;
@@ -229,7 +216,8 @@
   animation: pulse 1s linear infinite;
 }
 
-.message, .signin {
+.message,
+.signin {
   color: rgba(88, 87, 87, 0.822);
   font-size: 14px;
 }
@@ -279,14 +267,15 @@
   font-size: 0.9em;
 }
 
-.form label .input:focus + span,.form label .input+ span {
+.form label .input:focus + span,
+.form label .input + span {
   top: 30px;
   font-size: 0.6em;
   font-weight: 400;
 }
 
 .form label .input:valid + span {
-  color:grey;
+  color: grey;
 }
 
 .submit {
@@ -297,7 +286,7 @@
   border-radius: 10px;
   color: #fff;
   font-size: 16px;
-  transform: .3s ease;
+  transform: 0.3s ease;
   cursor: pointer;
 }
 
@@ -317,45 +306,42 @@
   }
 }
 
-
-.generated_url_div{
+.generated_url_div {
   display: flex;
   justify-content: center;
   gap: 20px;
   width: 320px;
 
- align-items: center;
+  align-items: center;
 }
 
-.generated_url_div> button{
+.generated_url_div > button {
   width: 100%;
-
 }
 
-.generated_url_div> img{
+.generated_url_div > img {
   cursor: pointer;
   height: 30px;
 }
 
-
 .success {
-   overflow-x: scroll;
-   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: scroll;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   width: 320px;
   padding: 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: start;
-  background: #EDFBD8;
+  background: #edfbd8;
   border-radius: 8px;
-  border: 1px solid #84D65A;
+  border: 1px solid #84d65a;
   box-shadow: 0px 0px 5px -3px #111;
 }
 
-
 .success::-webkit-scrollbar {
- /* Hide scrollbar in WebKit browsers */
+  /* Hide scrollbar in WebKit browsers */
   height: 8px;
 }
 
@@ -370,11 +356,9 @@
 .success__title {
   font-weight: 500;
   font-size: 14px;
-  color: #2B641E;
+  color: #2b641e;
 }
 
-
-
 .success__close path {
-  fill: #2B641E;
+  fill: #2b641e;
 }

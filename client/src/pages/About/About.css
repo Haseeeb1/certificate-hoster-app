@@ -1,37 +1,36 @@
 .about-us {
-    max-width: 1800px;
-    padding-left: 50px;
-    padding-right: 50px;
-    /* background-color: #fff; */
-    color: #403f3f;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 6rem;
-    min-width: auto;
-    margin-bottom: 25px;
+  max-width: 1800px;
+  padding-left: 50px;
+  padding-right: 50px;
+  /* background-color: #fff; */
+  color: #403f3f;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+  min-width: auto;
+  margin-bottom: 25px;
+}
+
+@media screen and (min-width: 1023px) {
+  .about-us {
+    margin-top: calc(3.5rem + 3.5rem);
   }
-  
-  @media screen and (min-width: 1023px) {
-    .about-us {
-      margin-top: calc(3.5rem + 3.5rem);
-    }
 }
 
 @media screen and (max-width: 550px) {
-    .about-us{
+  .about-us {
     max-width: 1800px;
     padding-left: 20px;
     padding-right: 20px;
-}
+  }
 }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  
-  .container>p {
-    line-height: 1.6;
-    text-align: justify;
-  }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container > p {
+  line-height: 1.6;
+  text-align: justify;
+}

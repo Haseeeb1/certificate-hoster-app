@@ -1,9 +1,9 @@
-.not__found__div{
-    max-width: 1800px;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5rem;
-    min-width: auto;
+.not__found__div {
+  max-width: 1800px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5rem;
+  min-width: auto;
 }

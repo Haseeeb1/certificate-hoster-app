@@ -1,6 +1,6 @@
 import "./Certificate.css";
 import assets from "../../assets";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { server_url } from "../../utils";
 import axios from "axios";
@@ -9,6 +9,8 @@ const Certificate = () => {
   const { id } = useParams();
   const [certificateData, setCertificateData] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCertificateData = async () => {
@@ -50,18 +52,18 @@ const Certificate = () => {
   if (!certificateData) {
     return (
       <div className="not__found__error-screen">
-        <div className="not__found__terminal-loader">
-          <div className="not__found__terminal-header">
-            <div className="not__found__terminal-title">Status</div>
-            <div className="not__found__terminal-controls">
-              <div className="not__found__control not__found__close"></div>
-              <div className="not__found__control not__found__minimize"></div>
-              <div className="not__found__control not__found__maximize"></div>
-            </div>
-          </div>
-          <div className="not__found__content">
-            <div className="not__found__text">No certificate data found...</div>
-          </div>
+        <div className="not__found__main">
+          <p>
+            This certificate link is invalid or no longer available.
+            <span className="create__span" onClick={() => navigate("/")}>
+              {" "}
+              Back to home?
+            </span>
+          </p>
+        </div>
+        <div className="loader__not__found">
+          <div className="light__not__found"></div>
+          <div className="black_overlay__not__found"></div>
         </div>
       </div>
     );

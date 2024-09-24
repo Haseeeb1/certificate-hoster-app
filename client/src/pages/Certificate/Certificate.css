@@ -230,7 +230,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: rgb(12, 180, 231);
+  background-color: rgb(0, 0, 0);
  }
  
  @keyframes spin {
@@ -291,70 +291,77 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 20px;
   height: 100vh;
 }
-.not__found__terminal-loader {
-  width: 100%;
-  max-width: 400px;
-  height: 200px;
-  background: #1c1c1c;
-  border: 1px solid #ffffff3e;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+
+.not__found__main>p{
+  font-size:1.3rem;
+  max-width: 500px;
 }
 
-.not__found__terminal-header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #343434;
-  padding: 6px;
+@media screen and (max-width:430px) {
+  .not__found__main>p{
+    padding: 5px;
+    font-size:15px;
+    max-width:100%;
+  }
+  
 }
 
-.not__found__terminal-controls {
-  position: absolute;
-  left: 10px;
-  display: flex;
-  gap: 7px;
-}
 
-.not__found__control {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background-color: #777;
-}
-
-.not__found__control.close {
-  background-color: #e33;
-}
-
-.not__found__control.minimize {
-  background-color: #ee0;
-}
-
-.control.maximize {
-  background-color: #0b0;
-}
-
-.not__found__terminal-title {
-  color: #eeeeeec1;
-}
-
-.not__found__content {
-  padding: 10px;
-}
-.not__found__text {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid green;
-  animation: typeAndDelete 8s steps(11) infinite,
-    blinkCursor 1s step-end infinite alternate;
-  color: rgb(0, 196, 0);
+.create__span{
+  cursor: pointer;
+  color: rgb(63, 61, 61);
   font-weight: 600;
+  transition: 0.3s;
+}
+.create__span:hover{
+  color: #000;
+}
+
+
+.loader__not__found {
+  height: 2px;
+  width: 200px;
+  background: rgb(44, 44, 44);
+  position: relative;
+  overflow: hidden;
+}
+.loader__not__found .black_overlay__not__found {
+  background: linear-gradient(
+    87deg,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.14) 30%,
+    rgba(0, 0, 0, 0.14) 70%,
+    rgb(0, 0, 0) 100%
+  );
+  position: absolute;
+  inset: 0px;
+}
+.loader__not__found .light__not__found {
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  left: -20%;
+  top: 0px;
+  background: linear-gradient(
+    87deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgb(253, 253, 253) 40%,
+    rgb(255, 255, 255) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  animation: light 2s infinite ease-in-out;
+}
+
+@keyframes light {
+  from {
+    left: -30%;
+  }
+  to {
+    left: 100%;
+  }
 }

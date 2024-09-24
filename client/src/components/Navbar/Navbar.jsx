@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import "./Navbar.css";
 import assets from "../../assets";
@@ -7,6 +7,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
 const Navbar = ({ verified }) => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -37,6 +38,7 @@ const Navbar = ({ verified }) => {
       if (result.isConfirmed) {
         localStorage.clear();
         clearAllCookies();
+        navigate("/auth");
         window.location.reload();
       }
     });
@@ -49,7 +51,7 @@ const Navbar = ({ verified }) => {
       <nav className="nav container__navbar">
         <Link to="/" className="nav__logo">
           <img className="logo__certificate__img" src={assets.logo} />
-          &nbsp;&nbsp;Cred-Share
+          &nbsp;&nbsp;Cert-Vault
         </Link>
 
         <div
@@ -79,19 +81,29 @@ const Navbar = ({ verified }) => {
                   About
                 </Link>
               </li>
-              <li className="nav__item">
+              {/* <li className="nav__item">
                 <Link onClick={toggleMenu} to="/support" className="nav__link">
                   Support Us
                 </Link>
-              </li>
+              </li> */}
             </ul>
             {verified ? (
-              <div className="avatar-container">
-                <button onClick={logout}>LogOut</button>
-                <div className="avatar">
-                  <div className="avatar__letter">{firstLetter}</div>
+              <>
+                <div className="avatar-container">
+                  <div className="avatar">
+                    <div className="avatar__letter">{firstLetter}</div>
+                  </div>
+
+                  {/* {isDropdownOpen && (
+                  <div className="dropdown-menu">
+                    <button onClick={logout}>LogOut</button>
+                  </div>
+                )} */}
                 </div>
-              </div>
+                <button className="button__login" onClick={logout}>
+                  Log Out
+                </button>
+              </>
             ) : (
               <Link to="/auth">
                 <button className="button__login" onClick={toggleMenu}>

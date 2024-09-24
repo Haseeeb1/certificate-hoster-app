@@ -5,6 +5,9 @@ import "animate.css";
 import axios from "axios";
 import { frontend_url, server_url } from "../../utils";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
+import { IoIosRefresh } from "react-icons/io";
 
 const Hero = ({ verified }) => {
   const [fileName, setFileName] = useState("");
@@ -23,6 +26,8 @@ const Hero = ({ verified }) => {
     message: "",
     userId: userId,
   });
+
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -83,10 +88,12 @@ const Hero = ({ verified }) => {
     }
 
     setLoading(true);
-    try {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async () => {
+    setGenerate(false); // Reset generate state before attempting to submit
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      try {
         const base64Data = reader.result;
 
         const response = await axios.post(
@@ -111,17 +118,77 @@ const Hero = ({ verified }) => {
             message: "",
             userId: userId,
           });
-
-          setLoading(false);
         }
-      };
-    } catch (error) {
-      console.error("Error uploading the image or sending data:", error);
-      setLoading(false);
+      } catch (error) {
+        if (error.response && error.response.status === 429) {
+          // Rate limit exceeded
+          toast.error(error.response.data.message);
+        } else {
+          toast.dismiss();
+          toast.error(error.response?.data?.error || "An error occurred.");
+          console.error("Error uploading certificate:", error); // Log error to console for debugging
+        }
+      } finally {
+        setLoading(false); // Ensure loading is reset whether it succeeded or failed
+      }
+    };
+
+    reader.onerror = (error) => {
       toast.dismiss();
-      toast.error("There was an error generating the link. Please try again.");
-    }
+      toast.error("File reading failed.");
+      console.error("File reading error:", error);
+      setLoading(false);
+    };
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!file) {
+  //     toast.dismiss();
+  //     toast.error("Please select a file before generating the link.");
+  //     return;
+  //   }
+
+  //   setLoading(true);
+  //   setGenerate(false); // Reset generate state before attempting to submit
+
+  //   try {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onloadend = async () => {
+  //       const base64Data = reader.result;
+
+  //       const response = await axios.post(
+  //         `${server_url}/api/generate/certificate`,
+  //         {
+  //           data: base64Data,
+  //           formData,
+  //         }
+  //       );
+
+  //       if (response.status === 201) {
+  //         const certificateId = response.data;
+  //         setCertificateUrl(`${frontend_url}/cred/${certificateId}`);
+  //         toast.dismiss();
+  //         toast.success("Link generated successfully!");
+  //         setGenerate(true);
+  //         setFormData({
+  //           name: "",
+  //           title: "",
+  //           hashtags: "",
+  //           dateSelected: "",
+  //           message: "",
+  //           userId: userId,
+  //         });
+  //       }
+  //     };
+  //   } catch (error) {
+  //     alert("hello");
+  //   } finally {
+  //     setLoading(false); // Ensure loading is reset whether it succeeded or failed
+  //   }
+  // };
 
   const handleBoxClick = () => {
     document.getElementById("file").click(); // Trigger file input click
@@ -147,6 +214,25 @@ const Hero = ({ verified }) => {
         toast.dismiss();
         toast.error("Failed to copy text: ", err);
       });
+  };
+
+  const handleRefresh = () => {
+    setFileName("");
+    setFile(null);
+    setGenerate(false);
+    setBackgroundImage("");
+    setCertificateUrl(null);
+    setLoading(false);
+
+    // Reset form fields
+    setFormData({
+      name: "",
+      title: "",
+      hashtags: "",
+      dateSelected: "",
+      message: "",
+      userId: userId,
+    });
   };
 
   return (
@@ -276,36 +362,81 @@ const Hero = ({ verified }) => {
                 </>
               )}
               {certificateUrl && (
-                <div className="success">
+                <div
+                  className="success"
+                  onClick={copyUrl}
+                  style={{ cursor: "copy" }}
+                >
                   <div className="success__title">{certificateUrl}</div>
                 </div>
               )}
+
               {generate ? (
-                <div className="generated_url_div">
-                  <button className="submit" onClick={copyUrl}>
-                    Copy Link
-                  </button>
-                  <img
-                    onClick={() => window.open(certificateUrl, "_blank")}
-                    className="view__icon"
-                    src={assets.view}
-                    alt="View Icon"
-                  />
-                </div>
+                <>
+                  <div className="generated_url_div">
+                    <button className="submit" onClick={copyUrl}>
+                      Copy Link
+                    </button>
+                    <FaEye
+                      onClick={() => window.open(certificateUrl, "_blank")}
+                      className="view__icon"
+                      title="View Certificate"
+                    />
+                    <IoIosRefresh
+                      className="view__icon"
+                      onClick={handleRefresh}
+                      title="Create new"
+                    />
+                    {/* <img
+                      onClick={() => window.open(certificateUrl, "_blank")}
+                      className="view__icon"
+                      src={assets.view}
+                      alt="View Icon"
+                    /> */}
+                  </div>
+                  <div className="create__again__div"></div>
+                </>
               ) : (
                 //  : loading ? ( // Show loader if loading is true
                 //   <div className="loader">
                 //     <p>hello</p>
                 //   </div>
                 // )
-                <button disabled={loading} className="submit" type="submit">
-                  Generate Link
-                </button>
+                <>
+                  {loading ? (
+                    <>
+                      <div className="loader__certificate">
+                        <div className="spinner__certificate">
+                          <div className="dot"></div>
+                          <div className="dot"></div>
+                          <div className="dot"></div>
+                          <div className="dot"></div>
+                          <div className="dot"></div>
+                        </div>
+                      </div>
+                      <p className="loader__p__tag">
+                        Generating your link. Please wait.
+                      </p>
+                    </>
+                  ) : (
+                    <button disabled={loading} className="submit" type="submit">
+                      Generate Link
+                    </button>
+                  )}
+                  {/* <button disabled={loading} className="submit" type="submit">
+                    Generate Link
+                  </button> */}
+                </>
               )}
               {!verified && (
                 <p className="signin">
                   All your certificates in one place?{" "}
-                  <a href="#">Sign-up now</a>
+                  <a
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate("/auth")}
+                  >
+                    Sign-up now
+                  </a>
                 </p>
               )}
             </form>

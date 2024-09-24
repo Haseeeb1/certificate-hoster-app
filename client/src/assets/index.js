@@ -13,6 +13,9 @@ import image1 from "./image1.png";
 import image2 from "./image2.png";
 import image3 from "./image3.png";
 import logo1 from "./logo.png";
+import imageauth1 from "./1.png";
+import imageauth2 from "./2.png";
+import imageauth3 from "./3.png";
 
 const assets = {
   logo,
@@ -30,6 +33,9 @@ const assets = {
   image2,
   image3,
   logo1,
+  imageauth1,
+  imageauth2,
+  imageauth3,
 };
 
 export default assets;

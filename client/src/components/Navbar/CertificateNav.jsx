@@ -48,7 +48,7 @@ const CertificateNav = ({ verified }) => {
       <nav className="nav container__navbar">
         <Link to="/" className="nav__logo">
           <img className="logo__certificate__img" src={assets.logo} />
-          &nbsp;&nbsp;Cred-Share
+          &nbsp;&nbsp;Cert-Vault
         </Link>
 
         <div
@@ -80,13 +80,31 @@ const CertificateNav = ({ verified }) => {
                 </Link>
               </li>
             </ul>
-            {verified && (
+            {/* {verified && (
               <div className="avatar-container">
                 <button onClick={logout}>LogOut</button>
                 <div className="avatar">
                   <div className="avatar__letter">{firstLetter}</div>
                 </div>
               </div>
+            )} */}
+            {verified && (
+              <>
+                <div className="avatar-container">
+                  <div className="avatar">
+                    <div className="avatar__letter">{firstLetter}</div>
+                  </div>
+
+                  {/* {isDropdownOpen && (
+                  <div className="dropdown-menu">
+                    <button onClick={logout}>LogOut</button>
+                  </div>
+                )} */}
+                </div>
+                <button className="button__login" onClick={logout}>
+                  Log Out
+                </button>
+              </>
             )}
           </div>
           {/* Close button */}

@@ -299,7 +299,6 @@
   font-size: 16px;
   transform: .3s ease;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .submit:hover {
@@ -333,15 +332,9 @@
 
 }
 
-.generated_url_div .view__icon{
-  font-size: 30px;
+.generated_url_div> img{
   cursor: pointer;
-  color: gray;
-  transition: 0.3s;
-}
-.generated_url_div .view__icon:hover{
-  color: #000;
-  cursor: pointer;
+  height: 30px;
 }
 
 
@@ -385,69 +378,3 @@
 .success__close path {
   fill: #2B641E;
 }
-
-
-.loader__certificate{
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.spinner__certificate {
-  width: 35px;
-  height: 35px;
-  position: relative;
- }
-
- .spinner__certificate .dot {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
- }
- 
- .spinner__certificate .dot::after {
-  content: "";
-  width: 3.1px;
-  height: 3.1px;
-  border-radius: 50%;
-  background-color: rgb(0, 0, 0);
- }
- 
- @keyframes spin {
-  to {
-   transform: rotate(360deg);
-  }
- }
- 
- .spinner__certificate .dot {
-  animation: spin 2s infinite;
- }
- 
- .spinner__certificate .dot:nth-child(2) {
-  animation-delay: 100ms;
- }
- 
- .spinner__certificate .dot:nth-child(3) {
-  animation-delay: 200ms;
- }
- 
- .spinner__certificate .dot:nth-child(4) {
-  animation-delay: 300ms;
- }
- 
- .spinner__certificate .dot:nth-child(5) {
-  animation-delay: 400ms;
- }
-
-
- .loader__p__tag{
-  display: flex;
-  justify-content: center;
-  max-width: 400px;
-  font-size: 12px;
-  text-align: center;
-
- }
-

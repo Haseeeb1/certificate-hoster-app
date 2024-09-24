@@ -12,6 +12,9 @@ import NotFound from "./pages/NotFound/NotFound";
 import { Toaster } from "react-hot-toast";
 import CertificateNav from "./components/Navbar/CertificateNav";
 import MyCred from "./pages/MyCertificates/MyCred";
+import EditHero from "./components/EditHero/EditHero";
+import Footer from "./components/Footer/Footer";
+import About from "./pages/About/About";
 
 function App() {
   const [verified, setVerified] = useState(false);
@@ -26,7 +29,7 @@ function App() {
           setVerified(true);
         }
       })
-      .catch((error) => console.log("not verified"));
+      .catch((error) => {});
   });
 
   return (
@@ -39,9 +42,22 @@ function App() {
               <>
                 <Navbar verified={verified} />
                 <Home verified={verified} />
+                <Footer verified={verified} />
               </>
             }
           />
+          {verified && (
+            <Route
+              path="/edit"
+              element={
+                <>
+                  <Navbar verified={verified} />
+                  <EditHero verified={verified} />
+                  <Footer verified={verified} />
+                </>
+              }
+            />
+          )}
           <Route
             path="/auth"
             element={
@@ -58,6 +74,7 @@ function App() {
                 <>
                   <Navbar verified={verified} />
                   <MyCred verified={verified} />
+                  <Footer verified={verified} />
                 </>
               }
             />
@@ -71,6 +88,16 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/about"
+            element={
+              <>
+                <Navbar verified={verified} />
+                <About />
+                <Footer verified={verified} />
+              </>
+            }
+          />
 
           <Route
             path="*"
@@ -78,11 +105,13 @@ function App() {
               <>
                 <Navbar verified={verified} />
                 <NotFound />
+                <Footer verified={verified} />
               </>
             }
           />
         </Routes>
       </Router>
+
       <Toaster />
     </>
   );

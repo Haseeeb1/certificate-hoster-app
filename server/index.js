@@ -10,6 +10,8 @@ const certificateRoute = require("./routes/certificates");
 const authMiddleware = require("./middleware/AuthMiddleware");
 
 const app = express();
+
+app.set("trust proxy", true);
 app.use(bodyParser.json({ limit: "10mb" }));
 connectDB();
 

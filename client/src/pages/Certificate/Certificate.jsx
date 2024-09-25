@@ -78,7 +78,7 @@ const Certificate = () => {
         <div className="certificate__details__div">
           <div className="certificate__details__left">
             <div className="logo-header__div">
-              <h3>CredShare.io &nbsp; </h3>
+              <h3>Cert-Vault &nbsp; </h3>
               <img className="logo__certificate__img" src={assets.logo} />
             </div>
             <div className="cert__name__div">

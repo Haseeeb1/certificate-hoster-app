@@ -121,9 +121,12 @@ const EditHero = ({ verified }) => {
       const response = await axios.put(
         `${server_url}/api/certificate/${certificateData.id}`,
         {
-          token: Cookies.get("token"),
+          // token: Cookies.get("token"),
           data: base64Data,
           formData,
+        },
+        {
+          withCredentials: true, // This allows cookies to be included in the request
         }
       );
 

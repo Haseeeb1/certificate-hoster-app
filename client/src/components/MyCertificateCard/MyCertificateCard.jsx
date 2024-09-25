@@ -38,15 +38,18 @@ const MyCertificateCard = ({
 
     if (result.isConfirmed) {
       try {
-        const token = Cookies.get("token");
-        if (!token) {
-          console.error("No token found!");
-          return;
-        }
+        // const token = Cookies.get("token");
+        // if (!token) {
+        //   console.error("No token found!");
+        //   return;
+        // }
         const response = await axios.delete(
           `${server_url}/api/certificate/${certId}`,
           {
-            data: { token },
+            // data: { token },
+          },
+          {
+            withCredentials: true, // This allows cookies to be included in the request
           }
         );
 

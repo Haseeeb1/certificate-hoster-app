@@ -12,17 +12,19 @@ const CertificateNav = ({ verified }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const clearAllCookies = () => {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i];
-      const eqPos = cookie.indexOf("=");
-      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie =
-        name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
-  };
-
+  // const clearAllCookies = () => {
+  //   const cookies = document.cookie.split(";");
+  //   for (let i = 0; i < cookies.length; i++) {
+  //     const cookie = cookies[i];
+  //     const eqPos = cookie.indexOf("=");
+  //     const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+  //     document.cookie =
+  //       name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  //   }
+  // };
+  function clearCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
   const logout = () => {
     Swal.fire({
       title: "Logout",
@@ -35,7 +37,8 @@ const CertificateNav = ({ verified }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.clear();
-        clearAllCookies();
+        // clearAllCookies();
+        clearCookie("token");
         window.location.reload();
       }
     });

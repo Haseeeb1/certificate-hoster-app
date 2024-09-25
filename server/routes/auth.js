@@ -131,7 +131,7 @@ router.post("/verify-email", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      //   maxAge: 4 * 24 * 60 * 60 * 1000,
+      maxAge: 4 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -172,7 +172,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      //   maxAge: 4 * 24 * 60 * 60 * 1000,
+      maxAge: 4 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({

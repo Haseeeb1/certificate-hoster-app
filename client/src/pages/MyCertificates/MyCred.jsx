@@ -22,10 +22,13 @@ const MyCred = ({ verified }) => {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const token = Cookies.get("token");
+        // const token = Cookies.get("token");
         const response = await axios.post(
           `${server_url}/api/user/${userId}/certificates`,
-          { token }
+          {},
+          {
+            withCredentials: true, // This allows cookies to be included in the request
+          }
         );
         const { certificates } = response.data;
         setCertificates(certificates);

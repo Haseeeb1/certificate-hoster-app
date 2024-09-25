@@ -19,11 +19,16 @@ import About from "./pages/About/About";
 function App() {
   const [verified, setVerified] = useState(false);
   const userId = localStorage.getItem("id");
+
   useEffect(() => {
     axios
-      .post(`${server_url}/verify`, {
-        token: Cookies.get("token"),
-      })
+      .post(
+        `${server_url}/verify`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         if (response.data.valid && response.data.user.id == userId) {
           setVerified(true);

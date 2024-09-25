@@ -1,13 +1,13 @@
 import MyCertificateCard from "../../components/MyCertificateCard/MyCertificateCard";
 import "./MyCred.css";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { server_url } from "../../utils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 
 const MyCred = ({ verified }) => {
-  const userId = localStorage.getItem("id");
+  const userId = secureLocalStorage.getItem("id");
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,12 +22,11 @@ const MyCred = ({ verified }) => {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        // const token = Cookies.get("token");
         const response = await axios.post(
           `${server_url}/api/user/${userId}/certificates`,
           {},
           {
-            withCredentials: true, // This allows cookies to be included in the request
+            withCredentials: true,
           }
         );
         const { certificates } = response.data;

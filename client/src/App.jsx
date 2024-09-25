@@ -6,7 +6,6 @@ import Certificate from "./pages/Certificate/Certificate";
 import Auth from "./pages/Auth/Auth";
 import axios from "axios";
 import { server_url } from "./utils";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
 import { Toaster } from "react-hot-toast";
@@ -15,10 +14,11 @@ import MyCred from "./pages/MyCertificates/MyCred";
 import EditHero from "./components/EditHero/EditHero";
 import Footer from "./components/Footer/Footer";
 import About from "./pages/About/About";
+import secureLocalStorage from "react-secure-storage";
 
 function App() {
   const [verified, setVerified] = useState(false);
-  const userId = localStorage.getItem("id");
+  const userId = secureLocalStorage.getItem("id");
 
   useEffect(() => {
     axios

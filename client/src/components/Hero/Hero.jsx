@@ -9,11 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
 
+import secureLocalStorage from "react-secure-storage";
+
+
 const Hero = ({ verified }) => {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState(null);
   const [generate, setGenerate] = useState(false);
-  const userId = localStorage.getItem("id") || null;
+  const userId = secureLocalStorage.getItem("id") || null;
   const [loading, setLoading] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState("");
   const [certificateUrl, setCertificateUrl] = useState(null);

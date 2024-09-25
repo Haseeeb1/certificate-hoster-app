@@ -5,8 +5,8 @@ import "animate.css";
 import axios from "axios";
 import { frontend_url, server_url } from "../../utils";
 import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 
 const EditHero = ({ verified }) => {
   const location = useLocation();
@@ -15,7 +15,7 @@ const EditHero = ({ verified }) => {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState(null);
   const [generate, setGenerate] = useState(false);
-  const userId = localStorage.getItem("id") || null;
+  const userId = secureLocalStorage.getItem("id") || null;
   const [loading, setLoading] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState("");
   const [certificateUrl, setCertificateUrl] = useState(null);
@@ -121,12 +121,11 @@ const EditHero = ({ verified }) => {
       const response = await axios.put(
         `${server_url}/api/certificate/${certificateData.id}`,
         {
-          // token: Cookies.get("token"),
           data: base64Data,
           formData,
         },
         {
-          withCredentials: true, // This allows cookies to be included in the request
+          withCredentials: true,
         }
       );
 

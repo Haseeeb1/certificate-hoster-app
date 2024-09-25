@@ -3,7 +3,6 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { server_url } from "../../utils";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
@@ -38,18 +37,10 @@ const MyCertificateCard = ({
 
     if (result.isConfirmed) {
       try {
-        // const token = Cookies.get("token");
-        // if (!token) {
-        //   console.error("No token found!");
-        //   return;
-        // }
         const response = await axios.delete(
           `${server_url}/api/certificate/${certId}`,
           {
-            // data: { token },
-          },
-          {
-            withCredentials: true, // This allows cookies to be included in the request
+            withCredentials: true,
           }
         );
 

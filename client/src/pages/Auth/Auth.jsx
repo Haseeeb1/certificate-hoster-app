@@ -5,6 +5,7 @@ import { server_url } from "../../utils";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import secureLocalStorage from "react-secure-storage";
 
 const Auth = ({ verified }) => {
   const navigate = useNavigate();
@@ -172,9 +173,9 @@ const Auth = ({ verified }) => {
         }
       );
 
-      localStorage.setItem("name", response.data.name);
-      localStorage.setItem("email", response.data.email);
-      localStorage.setItem("id", response.data.id);
+      secureLocalStorage.setItem("name", response.data.name);
+      secureLocalStorage.setItem("email", response.data.email);
+      secureLocalStorage.setItem("id", response.data.id);
       navigate("/");
       window.location.reload();
     } catch (error) {
@@ -210,9 +211,9 @@ const Auth = ({ verified }) => {
         }
       );
 
-      localStorage.setItem("name", response.data.name);
-      localStorage.setItem("email", response.data.email);
-      localStorage.setItem("id", response.data.id);
+      secureLocalStorage.setItem("name", response.data.name);
+      secureLocalStorage.setItem("email", response.data.email);
+      secureLocalStorage.setItem("id", response.data.id);
       navigate("/");
       window.location.reload();
     } catch (error) {

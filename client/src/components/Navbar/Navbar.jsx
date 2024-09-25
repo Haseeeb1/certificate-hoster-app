@@ -5,6 +5,7 @@ import "./Navbar.css";
 import assets from "../../assets";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import secureLocalStorage from "react-secure-storage";
 
 const Navbar = ({ verified }) => {
   const navigate = useNavigate();
@@ -13,17 +14,6 @@ const Navbar = ({ verified }) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  // const clearAllCookies = () => {
-  //   const cookies = document.cookie.split(";");
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i];
-  //     const eqPos = cookie.indexOf("=");
-  //     const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-  //     document.cookie =
-  //       name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  //   }
-  // };
 
   function clearCookie(name) {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -40,14 +30,13 @@ const Navbar = ({ verified }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.clear();
-        // clearAllCookies();
         clearCookie("token");
         navigate("/auth");
         window.location.reload();
       }
     });
   };
-  const name = localStorage.getItem("name");
+  const name = secureLocalStorage.getItem("name");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "";
 
   return (

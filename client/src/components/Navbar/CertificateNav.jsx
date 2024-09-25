@@ -4,6 +4,7 @@ import assets from "../../assets";
 import { FiMenu, FiX } from "react-icons/fi";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import secureLocalStorage from "react-secure-storage";
 
 const CertificateNav = ({ verified }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,16 +13,6 @@ const CertificateNav = ({ verified }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // const clearAllCookies = () => {
-  //   const cookies = document.cookie.split(";");
-  //   for (let i = 0; i < cookies.length; i++) {
-  //     const cookie = cookies[i];
-  //     const eqPos = cookie.indexOf("=");
-  //     const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-  //     document.cookie =
-  //       name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  //   }
-  // };
   function clearCookie(name) {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
@@ -37,13 +28,12 @@ const CertificateNav = ({ verified }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.clear();
-        // clearAllCookies();
         clearCookie("token");
         window.location.reload();
       }
     });
   };
-  const name = localStorage.getItem("name");
+  const name = secureLocalStorage.getItem("name");
   const firstLetter = name ? name.charAt(0).toUpperCase() : "";
 
   return (

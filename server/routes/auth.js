@@ -22,8 +22,24 @@ async function sendVerificationEmail(userEmail, verificationCode) {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: userEmail,
-    subject: "Verify your email",
-    text: `Your verification code is: ${verificationCode}`,
+    subject: "Verify Your Email - Cert-Vault",
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2 style="color: #4CAF50; text-align: center;">Welcome to Cert-Vault!</h2>
+        <p style="font-size: 16px; margin-bottom: 20px;">Dear User,</p>
+        <p style="font-size: 16px; margin-bottom: 20px;">Thank you for signing up. To complete your registration, please verify your email address by using the verification code below:</p>
+        <div style="text-align: center; margin: 20px 0;">
+          <p style="font-size: 24px; font-weight: bold; background-color: #f4f4f4; padding: 10px 20px; display: inline-block; border-radius: 5px;">
+            ${verificationCode}
+          </p>
+        </div>
+        <p style="font-size: 16px;">If you didn’t request this, you can ignore this email.</p>
+        <p style="font-size: 16px;">Best regards,<br />The Cert-Vault Team</p>
+        <div style="text-align: center; margin-top: 30px; font-size: 14px; color: #888;">
+          <p>&copy; 2024 Cert-Vault.</p>
+        </div>
+      </div>
+    `,
   };
 
   await transporter.sendMail(mailOptions);

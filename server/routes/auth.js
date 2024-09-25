@@ -127,14 +127,11 @@ router.post("/verify-email", async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
 
-    res.cookie(
-      "token",
-      token
-      // , {
+    res.cookie("token", token, {
+      sameSite: "none",
       //   httpOnly: false,
       //   maxAge: 4 * 24 * 60 * 60 * 1000,
-      // }
-    );
+    });
 
     res.status(200).json({
       msg: "Email verified successfully",
@@ -170,14 +167,11 @@ router.post("/login", async (req, res) => {
       });
     }
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
-    res.cookie(
-      "token",
-      token
-      //   , {
+    res.cookie("token", token, {
+      sameSite: "none",
       //   httpOnly: false,
       //   maxAge: 4 * 24 * 60 * 60 * 1000,
-      // }
-    );
+    });
 
     res.status(200).json({
       msg: "Login successful",
